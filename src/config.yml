@@ -1,0 +1,616 @@
+Quirks:
+  Permeation:
+    DisplayName: '&6Per&fmeation'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&dTransformation'
+    Abilities:
+      Ability1:
+        Name: '&6>> &fPunch &6<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+      Ability2:
+        Name: '&6>> &6Stun &fPunch &6<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        StunTimer: 1
+      Ultimate:
+        Name: '&6>> &f&lPhantom &6&lDomain &6<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltTimer: 15
+        UltBuff: 4.0
+      RCAbility:
+        Name: '&6>> &fPhase &6<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+  Blackwhip:
+    DisplayName: '&8Black&3whip'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&3>> &8Whip &3Pull &3<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        Blackwhip_Length: 12
+        Blackwhip_Hitbox: 0.5
+      Ability2:
+        Name: '&3>> &3Triple &8Shock &3<<'
+        Damage: 8.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        Blackwhip_Length: 6
+        Blackwhip_Hitbox: 0.5
+      Ultimate:
+        Name: '&3>> &3&lTendril &8&lTerror &3<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltRadius: 8.0
+        SlowTimer: 5
+        UltSlow: 2
+      RCAbility:
+        Name: '&3>> &8Black&3whip &3<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        Blackwhip_Length: 15
+        Blackwhip_Hitbox: 0.5
+  Erasure:
+    DisplayName: '&cErasure'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&eSupport'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&c>> &cErase &c<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+      Ability2:
+        Name: '&c>> &fPunch &c<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        EraseTimer: 2
+        Erasure_Hitbox: 0.5
+      Ultimate:
+        Name: '&f>> &4&lTotal &c&lErasure &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        ErasureTimer: 4
+        Erasure_Hitbox: 50.0
+      RCAbility:
+        Name: '&c>> &fCloth Grapple &c<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        Cloth_Length: 8
+  Zero-Gravity:
+    DisplayName: '&dZero-Gravity'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&eSupport'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&5>> &dZero-Gravity &fPunch &5<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        BuffDuration: 10
+        BuffAmplifier: 3
+        GravityDuration: 2
+        GravityAmplifier: 17
+      Ability2:
+        Name: '&5>> &fRelease &5<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+      Ultimate:
+        Name: '&5>> &d&lFloor &d&lis &c&lLava&d! &5<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        GravityDuration: 2
+        GravityAmplifier: 17
+        UltTimer: 8
+        SpeedAmplifier: 4
+      RCAbility:
+        Name: '&5>> &dSelf Gravitation &5<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        GravityDuration: 2
+        GravityAmplifier: 17
+  HalfCold-HalfHot:
+    DisplayName: '&bHalf-Cold &cHalf-Hot'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&b>> &bIce Wall &c<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        FreezeTimer: 3
+      Ability2:
+        Name: '&b>> &cFlame Barrage &c<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        StunTimer: 1
+        BurnTimer: 4
+        FlameRange: 10
+      Ultimate:
+        Name: '&b>> &f&lFlash&b&lFreeze &c&lHeatwave &c<<'
+        Damage: 20.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        FreezeTimer: 3
+      RCAbility:
+        Name: '&b>> &bMobi&clity &c<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        AbilityTimer: 4
+    Object:
+      Ice_0:
+        Timer: 1
+      Ice_Wall:
+        Timer: 10
+      Ice_Spike:
+        Timer: 5
+  Explosion:
+    DisplayName: '&6Explosion'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&7>> &6Explosion &7<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        Hitbox: 1.2
+      Ability2:
+        Name: '&7>> &6Stun &7Grenade &7<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        BlindTimer: 4
+      Ultimate:
+        Name: '&7>> &6&lEXPLOSION &7<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        BlastLength: 15
+      RCAbility:
+        Name: '&7>> &6Explosive &7Speed &7<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 0
+        Description: N/A
+  Tape:
+    DisplayName: '&fTape'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&eSupport'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&f>> &fTape &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        TapeTimer: 4
+      Ability2:
+        Name: '&f>> &fTape Trap &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        TapeRange: 15
+        TapeTimer: 4
+        Tape_Hitbox: 0.5
+        Tape_Radius: 2.0
+      Ultimate:
+        Name: '&f>> &f&lTape &f&lFrenzy &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltTimer: 10
+        Ability1CD: 1
+        Ability2CD: 1
+        RCAbilityCD: 1
+      RCAbility:
+        Name: '&f>> &fTape Grapple &f<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        Tape_Length: 15
+        Tape_Hitbox: 0.5
+  Decay:
+    DisplayName: '&8Decay'
+    Item: BOOK
+    Classification: '&5Villain'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&7>> &8Decay &7<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        DecayTimer: 4
+        DecayAmplifier: 2
+      Ability2:
+        Name: '&7>> &8Desolation &7<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        DecayRange: 15
+        DecayBlockTimer: 6
+        DecayTimer: 4
+        DecayAmplifier: 2
+      Ultimate:
+        Name: '&7>> &5&lGod &8&lof &f&lDestruction &7<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        DecayBlockTimer: 15
+        DecayRadius: 40.0
+        DecayTimer: 4
+        DecayAmplifier: 2
+      RCAbility:
+        Name: '&7>> &8Enchanced Mobility &7<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 0
+        Description: N/A
+        AbilityTimer: 5
+        MobilityAmplifier: 3
+  Engine:
+    DisplayName: '&bEngine'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&fMutant'
+    Passive:
+      Speed: 0.2
+    Abilities:
+      Ability1:
+        Name: '&f>> &bPunch &f<<'
+        Damage: 4.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+      Ability2:
+        Name: '&f>> &bRecipro Burst &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        AbilityTimer: 6
+      Ultimate:
+        Name: '&f>> &b&lRecipro &6&lTurbo &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltTimer: 10
+      RCAbility:
+        Name: '&f>> &bEngine &f<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 0
+        Description: N/A
+        SpeedAmplifier: 4
+  FaJin:
+    DisplayName: '&bFa&3Jin'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&3>> &bSmash &3<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        KineticCharge: 30
+      Ability2:
+        Name: '&3>> &bKinetic &fBoost &3<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        AbilityTimer: 8
+      Ultimate:
+        Name: '&3>> &b&lKinetic &f&lDischarge &3<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltTimer: 10
+      RCAbility:
+        Name: '&3>> &fDash &3<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        KineticCharge: 25
+  Hardening:
+    DisplayName: '&7Harden&8ing'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&eSupport'
+    Type: '&dTransformation'
+    Abilities:
+      Ability1:
+        Name: '&8>> &7Harden &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        AbilityTimer: 10
+        Harden_Damage_Reduction_Percentage: 80.0
+      Ability2:
+        Name: '&8>> &7Gauntlet Fissure &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        BlockRadius: 3
+        SlowAmplifier: 4
+      Ultimate:
+        Name: '&8>> &4&lUNBREAKABLE &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltTimer: 15
+      RCAbility:
+        Name: '&8>> &fPunch &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+  Cremation:
+    DisplayName: '&bCre&8mation'
+    Item: BOOK
+    Classification: '&5Villain'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&8>> &bFlame Burst &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+      Ability2:
+        Name: '&8>> &bIgnition &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        BurnTimer: 5
+      Ultimate:
+        Name: '&8>> &b&lDevil''s &8&lDance &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltTimer: 15
+        BuffDamage: 2.0
+      RCAbility:
+        Name: '&8>> &bFlamethrower &8<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 0
+        Description: N/A
+  Rewind:
+    DisplayName: '&eRewind'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&eSupport'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&f>> &eRewind &fAura &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        StaminaLossInterval: 10
+        StaminLossAmount: 2
+        CastRange: 2
+      Ability2:
+        Name: '&f>> &eTension &7Blow &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        AbilityRadius: 5
+      Ultimate:
+        Name: '&f>> &e&lTransendence &f<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 1
+        Description: N/A
+        UltTimer: 8
+        UltRadius: 5.0
+      RCAbility:
+        Name: '&f>> &eRewind &f<<'
+        Damage: 0.0
+        StaminaCost: 1
+        Cooldown: 0
+        Description: N/A
+        CastRange: 4
+Console:
+  ChatName: '&0&l[&e&lPROJECT MHA&0&l]'
+Game:
+  Entity:
+    Dummy:
+      Health: 40.0
+  Gamemodes:
+    Playground:
+      DisplayName: '&dPlayground'
+      Item: HONEY_BLOCK
+      Settings:
+        StartingHealth: 40.0
+        StartingStamina: 800
+        Minutes: 60
+        Seconds: 0
+    Free-For-All:
+      DisplayName: '&cFree-For-All'
+      Item: RED_BANNER
+      Settings:
+        StartingHealth: 30.0
+        StartingStamina: 800
+        Minutes: 2
+        Seconds: 0
+        KillCount: 1
+    Team-Deathmatch:
+      DisplayName: '&9Team-Deathmatch'
+      Item: BLUE_BANNER
+      Settings:
+        StartingHealth: 30.0
+        StartingStamina: 800
+        Minutes: 2
+        Seconds: 0
+        MaxScore: 4
+    Hero-vs-Villain:
+      DisplayName: '&aHero &6vs &5Villain'
+      Item: PURPLE_BANNER
+      Settings:
+        StartingHealth: 30.0
+        StartingStamina: 800
+        Minutes: 2
+        Seconds: 0
+    Tournament-Bracket:
+      DisplayName: '&6Tournament &fBracket'
+      Item: WHITE_BANNER
+      Settings:
+        StartingHealth: 30.0
+        StartingStamina: 800
+        Minutes: 2
+        Seconds: 0
+Users:
+  9d3acbea-416c-4d5b-8288-75f167e256fb:
+    NAME: Hadences
+    WINS: '0'
+  2b5a6122-7220-48f2-ab8e-52787e7c1f19:
+    NAME: Catslats1
+    WINS: '0'
+Arenas:
+  Test:
+    NAME: Test
+    LOBBYSPAWN:
+      X: -35.55349775015258
+      Y: 8.0
+      Z: -46.50705669860076
+    TEAM1SPAWN:
+      X: -35.55349775015258
+      Y: 8.0
+      Z: -46.50705669860076
+    TEAM2SPAWN:
+      X: -35.55349775015258
+      Y: 8.0
+      Z: -46.50705669860076
+    SPAWNPOINTS:
+      sp0:
+        X: -213.92345422537963
+        Y: 13.0
+        Z: -86.79916845008083
+      sp1:
+        X: -223.18517499302288
+        Y: 13.0
+        Z: -85.69999998807907
+      sp2:
+        X: -213.1333763422139
+        Y: 16.0
+        Z: -81.78116782144541
+      sp3:
+        X: -224.15451845431645
+        Y: 21.0
+        Z: -89.22720427917264
+      sp4:
+        X: -209.49250029483764
+        Y: 22.0
+        Z: -91.51630189375885
+      sp5:
+        X: -208.30000001192093
+        Y: 21.0
+        Z: -81.83470315785411
+      sp6:
+        X: -221.79306846358315
+        Y: 13.0
+        Z: -86.90746585723845
+      sp7:
+        X: -194.21166284785966
+        Y: 6.0
+        Z: -87.3556393767148
+      sp8:
+        X: -191.65268907483045
+        Y: 6.0
+        Z: -87.0443300504967
+    COMPLETE: true

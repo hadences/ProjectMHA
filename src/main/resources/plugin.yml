@@ -1,0 +1,13 @@
+name: ProjectMHA
+version: '${project.version}'
+main: hadences.projectmha.ProjectMHA
+api-version: 1.17
+authors: [ JaesunP ]
+description: The new improved update on a previous built plugin - ReforgedMHA
+commands:
+  mha:
+    usage: /mha <command>
+    description: main command line for the My Hero Academia project.
+  dev:
+    usage: /dev
+    description: toggles on dev mode.
