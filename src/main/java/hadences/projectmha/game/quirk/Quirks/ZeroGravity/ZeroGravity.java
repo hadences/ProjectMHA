@@ -339,15 +339,15 @@ class Ability1 {
 
         if(!target.isEmpty()) {
             for (Entity e : target) {
-                if (e instanceof LivingEntity) {
-                    buffAlly((LivingEntity) e, p);
+                if (e instanceof LivingEntity && e instanceof Player) {
+                    buffAlly((Player) e, p);
                 }
             }
             cooldowns.put(p.getName(), System.currentTimeMillis() + (1 * 1000));
         }else {
             for (Entity e : enemy_target) {
                 if (e instanceof LivingEntity) {
-                    gravitateEnemy((LivingEntity) e);
+                    gravitateEnemy((Player) e);
                 }
             }
         }
@@ -358,11 +358,11 @@ class Ability1 {
 
     }
 
-    public void gravitateEnemy(LivingEntity e){
+    public void gravitateEnemy(Player e){
         e.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,gravityduration,gravityamplifier));
     }
 
-    public void buffAlly(LivingEntity e, Player supporter){
+    public void buffAlly(Player e, Player supporter){
         ChatColor teamcolor = ProjectMHA.getPlugin(ProjectMHA.class).board.getScoreboard().getTeam(playerdata.get(supporter.getUniqueId()).getTEAM()).getColor();
 
         e.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,buffduration,buffamplifier));
@@ -438,10 +438,12 @@ class Ultimate implements Listener {
         Damage damage = new Damage();
         if(e.getDamager() instanceof Player){
             if(e.getDamager() == player && inUltimate){
+                if(!playerdata.get(player.getUniqueId()).isABILITY_USAGE()) return;
+
                 if(e.getEntity() instanceof LivingEntity) {
                     gravitateEnemy((LivingEntity) e.getEntity());
                     playsound((Player) e.getDamager());
-                    damage.disarm((Player) e.getDamager(), e.getEntity(),(gravityduration/20) + 40);
+                    damage.disarm((Player) e.getDamager(), e.getEntity(),(gravityduration/20)+2);
                 }
             }
         }

@@ -93,6 +93,7 @@ public class Playground extends GamemodeManager implements Listener {
         sendTitleToAll(Chat.format("&c[&eGame Ended&c]"), printWinnerStatement());
         //set everyone to gamemode spectator and play sound
         for (Player p : playerlist) {
+            console.endPassives();
             p.setGameMode(GameMode.SPECTATOR);
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5f, 1.0f);
         }
@@ -171,6 +172,8 @@ public class Playground extends GamemodeManager implements Listener {
         int random = new Random().nextInt(console.getSpawnpoints().size());
         return console.getSpawnpoints().get(random);
     }
+
+
 
     @EventHandler
     public void onDeathEvent(PlayerDeathEvent e) {

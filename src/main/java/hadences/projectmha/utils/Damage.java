@@ -4,6 +4,7 @@ import hadences.projectmha.ProjectMHA;
 import hadences.projectmha.chat.Chat;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -39,10 +40,10 @@ public class Damage {
 
     public void disarm(Player p, Entity e, int seconds){
 
-            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ITEM_BREAK,1.0f,1.0f);
+            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ITEM_BREAK,0.5f,1.0f);
 
             if(e instanceof Player){
-                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &DISARMED"),Chat.format("&cUnable to use your quirk!"));
+                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &cDISARMED"),Chat.format("&cUnable to use your quirk!"),0,40,0);
                 playerdata.get(e.getUniqueId()).setABILITY_USAGE(false);
                 BukkitTask Disarm = new Disarm((Player) e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),seconds*20);
                 FixQuirkSchedulers((Player) e,"CC_DISARM",Disarm);
@@ -53,12 +54,12 @@ public class Damage {
 
     public void stun(Player p, Entity e, int seconds, boolean playsound){
             if(playsound)
-            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE,1.0f,2.0f);
+            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE,0.5f,1f);
 
             if(e instanceof Player){
-                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eIMMOBILIZED"),Chat.format("&cUnable to move!"));
+                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eSTUNNED"),Chat.format("&cUnable to move!"),0,40,0);
                 playerdata.get(e.getUniqueId()).setCAN_JUMP(false);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,999*20,100));
+                ((Player)e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,999*20,100));
                 BukkitTask Stun = new Stun((Player) e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),seconds*20);
                 FixQuirkSchedulers((Player) e,"CC_STUN",Stun);
 
@@ -73,15 +74,15 @@ public class Damage {
     }
 
     public void immobilize(Player p, Entity e, int seconds){
-            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE,1.0f,2.0f);
+            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE,0.5f,2.0f);
 
             if(e instanceof Player){
 
-                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eIMMOBILIZED"),Chat.format("&cUnable to use abilities and move!"));
+                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eIMMOBILIZED"),Chat.format("&cUnable to use abilities and move!"),0,40,0);
                 playerdata.get(e.getUniqueId()).setCAN_JUMP(false);
-                playerdata.get(p.getUniqueId()).setABILITY_USAGE(false);
+                playerdata.get(e.getUniqueId()).setABILITY_USAGE(false);
 
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,999*20,100));
+                ((Player)e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,999*20,100));
                 BukkitTask Immobilize = new Immobilize((Player) e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),seconds*20);
                 FixQuirkSchedulers((Player) e,"CC_IMMOBILIZE",Immobilize);
         }else {
@@ -100,7 +101,7 @@ public class Damage {
         for(Entity e : entities){
             if(e.getCustomName() != null && e.getCustomName().contains("object"))
                 continue;
-            e.getWorld().playSound(e.getLocation(), Sound.BLOCK_FIRE_AMBIENT,1.0f,1.0f);
+            e.getWorld().playSound(e.getLocation(), Sound.BLOCK_FIRE_AMBIENT,0.5f,1.0f);
 
             if(e instanceof LivingEntity){
                 (e).setFireTicks(seconds*20);
@@ -114,10 +115,10 @@ public class Damage {
         for(Entity e : entities){
             if(e.getCustomName() != null && e.getCustomName().contains("object"))
                 continue;
-            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE,1.0f,2.0f);
+            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ITEM_BREAK,0.5f,2.0f);
 
             if(e instanceof Player){
-                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &DISARMED"),Chat.format("&cUnable to use your quirk!"));
+                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &cDISARMED"),Chat.format("&cUnable to use your quirk!"),0,40,0);
                 playerdata.get(e.getUniqueId()).setABILITY_USAGE(false);
                 BukkitTask Disarm = new Disarm((Player) e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),seconds*20);
                 FixQuirkSchedulers((Player) e,"CC_DISARM",Disarm);
@@ -132,12 +133,12 @@ public class Damage {
         for(Entity e : entities){
             if(e.getCustomName() != null && e.getCustomName().contains("object"))
                 continue;
-            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE,1.0f,2.0f);
+            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 0.5f,1f);
 
             if(e instanceof Player){
-                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eIMMOBILIZED"),Chat.format("&cUnable to move!"));
+                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eSTUNNED"),Chat.format("&cUnable to move!"),0,40,0);
                 playerdata.get(e.getUniqueId()).setCAN_JUMP(false);
-                ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999 * 20, 100));
+                ((Player)e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999 * 20, 100));
 
                 BukkitTask Stun = new Stun((Player) e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),seconds*20);
                 FixQuirkSchedulers((Player) e,"CC_STUN",Stun);
@@ -158,12 +159,12 @@ public class Damage {
         for(Entity e : entities) {
             if(e.getCustomName() != null && e.getCustomName().contains("object"))
                 continue;
-            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 1.0f, 2.0f);
+            e.getWorld().playSound(e.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 0.5f, 2.0f);
 
             if (e instanceof Player) {
-                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eIMMOBILIZED"), Chat.format("&cUnable to use abilities and move!"));
+                ((Player) e).sendTitle(Chat.format("&6[&4!&6] &eIMMOBILIZED"), Chat.format("&cUnable to use abilities and move!"),0,40,0);
                 playerdata.get(e.getUniqueId()).setCAN_JUMP(false);
-                playerdata.get(p.getUniqueId()).setABILITY_USAGE(false);
+                playerdata.get(e.getUniqueId()).setABILITY_USAGE(false);
                 ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 999 * 20, 100));
 
                 BukkitTask Immobilize = new Immobilize((Player) e, ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class), seconds * 20);
@@ -190,16 +191,17 @@ public class Damage {
                 for(Entity e : target){
 
                     if(e instanceof Player){
-                        if(((Player) e).getGameMode() == GameMode.SPECTATOR || ((Player) e).getGameMode() == GameMode.CREATIVE){
+                        if(((Player) e).getGameMode() == GameMode.SPECTATOR || ((Player) e).getGameMode() == GameMode.CREATIVE) {
                             toRemove.add(e);
-                        }else if(!team.allowFriendlyFire() && playerdata.get(p.getUniqueId()).getTEAM() == playerdata.get(e.getUniqueId()).getTEAM())
+                        }
+                        if(team.allowFriendlyFire() == false && playerdata.get(p.getUniqueId()).getTEAM().contains(playerdata.get(((Player) e).getPlayer().getUniqueId()).getTEAM())) {
                             toRemove.add(e);
+                        }
                     }
                 }
 
         target.removeAll(toRemove);
         toRemove.clear();
-        target = removeDuplicates(target);
         return target;
     }
 
@@ -214,16 +216,16 @@ public class Damage {
                 if(e instanceof Player){
                     if(((Player) e).getGameMode() == GameMode.SPECTATOR || ((Player) e).getGameMode() == GameMode.CREATIVE){
                         toRemove.add(e);
-                    }else if(!team.allowFriendlyFire() && playerdata.get(p.getUniqueId()).getTEAM() != playerdata.get(e.getUniqueId()).getTEAM())
+                    }
+                    if((team.allowFriendlyFire() == true && playerdata.get(p.getUniqueId()).getTEAM().contains(playerdata.get(e.getUniqueId()).getTEAM())))
                         toRemove.add(e);
-                }else{
-                    toRemove.add(e);
+                    if(!playerdata.get(p.getUniqueId()).getTEAM().contains(playerdata.get(e.getUniqueId()).getTEAM()))
+                        toRemove.add(e);
                 }
             }
 
         target.removeAll(toRemove);
         toRemove.clear();
-        target = removeDuplicates(target);
         return target;
     }
 

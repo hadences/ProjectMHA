@@ -426,9 +426,9 @@ class Ability2{
                 loc.getWorld().spawnParticle(Particle.SOUL, loc.clone().add(pos), 5, 0.1, 0, 0.1, 0.1);
 
                 damage.burn(p, (ArrayList<Entity>) loc.clone().add(pos).getNearbyEntities(1,1,1), BurnTimer);
-
+                damage.damageList(p, (ArrayList<Entity>) loc.clone().add(pos).getNearbyEntities(1,1,1), playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY2_DAMAGE());
                 if(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getUltimate().isInUltimate()){
-                    new MHABlock(loc.clone().add(pos).getBlock(),Material.FIRE,BurnTimer);
+                    new MHABlock(p,loc.clone().add(pos).getBlock(),Material.FIRE,BurnTimer);
                 }
 
 
@@ -457,9 +457,9 @@ class Ultimate extends hadences.projectmha.game.quirk.Ultimate {
         Double Ability2Dmg = playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY2_DAMAGE();
         Double RCAbilityDmg = playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getRCABILITY_DAMAGE();
 
-        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY1_DAMAGE(Ability1Dmg + BuffDamage);
-        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY2_DAMAGE(Ability2Dmg + BuffDamage);
-        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setRCABILITY_DAMAGE(RCAbilityDmg + BuffDamage);
+        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY1_DAMAGE(Ability1Dmg + (2*BuffDamage));
+        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY2_DAMAGE(Ability2Dmg + (2*BuffDamage));
+        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setRCABILITY_DAMAGE(RCAbilityDmg + (2*BuffDamage));
 
         p.getWorld().playSound(p.getLocation(),Sound.ENTITY_WITHER_AMBIENT,2f,1f);
         visuals(p);
@@ -472,7 +472,7 @@ class Ultimate extends hadences.projectmha.game.quirk.Ultimate {
                 inUltimate = false;
                 playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY1_DAMAGE(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getOG_ABILITY1_DAMAGE());
                 playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY2_DAMAGE(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getOG_ABILITY2_DAMAGE());
-                playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setRCABILITY_DAMAGE(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getRCABILITY_DAMAGE());
+                playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setRCABILITY_DAMAGE(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getOG_RCABILITY_DAMAGE());
             }
         }.runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),UltTimer*20);
     }
@@ -511,7 +511,7 @@ class RCAbility{
         for(int i = 0; i < positions.size(); i++){
             Location position = positions.get(i).toLocation(p.getWorld());
             //position.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, position, 1, 0, 0, 0, 0.1);
-            position.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, position, 10, 0.1, 0.1, 0.1, 0.05);
+            position.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, position, 2, 0.1, 0.1, 0.1, 0.05);
             position.getWorld().spawnParticle(Particle.SOUL, position, 1, 0.05, 0.05, 0.05, 0.1);
             damage.damageList(p, (ArrayList<Entity>) position.getNearbyEntities(1,1,1),playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getRCABILITY_DAMAGE());
         }

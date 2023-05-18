@@ -382,7 +382,7 @@ class Ability2{
     public void QuirkErased(Player e, Player p){
         playerdata.get(e.getUniqueId()).setABILITY_USAGE(false);
         e.sendTitle(ChatColor.RED + "QUIRK ERASED","");
-        BukkitTask ErasureTask = new ErasureScheduler(e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class), 2* (Long) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Erasure.Abilities.Ability2.EraseTimer"));
+        BukkitTask ErasureTask = new ErasureScheduler(e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class), 20* (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Erasure.Abilities.Ability2.EraseTimer"));
         FixQuirkSchedulers(e,playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME(),ErasureTask);
     }
 }
@@ -431,8 +431,8 @@ class Ultimate {
     public void QuirkErased(Player e, Player p){
         playerdata.get(e.getUniqueId()).setABILITY_USAGE(false);
         e.sendTitle(ChatColor.RED + "QUIRK ERASED","");
-        BukkitTask ErasureTask = new ErasureScheduler(e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class), 2* (Long) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Erasure.Abilities.Ultimate.EraseTimer"));
-        FixQuirkSchedulers(e,playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME(),ErasureTask);
+        BukkitTask Erase = new ErasureScheduler(e,ProjectMHA.getPlugin(ProjectMHA.class)).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class), 20* (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Erasure.Abilities.Ultimate.ErasureTimer"));
+        FixQuirkSchedulers(e,playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME()+"Ultimate",Erase);
     }
 }
 
@@ -512,6 +512,5 @@ class ErasureScheduler extends BukkitRunnable{
     @Override
     public void run() {
         playerdata.get(e.getUniqueId()).setABILITY_USAGE(true);
-        this.cancel();
     }
 }

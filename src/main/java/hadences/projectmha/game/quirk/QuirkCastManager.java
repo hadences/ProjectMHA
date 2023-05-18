@@ -97,6 +97,10 @@ public class QuirkCastManager implements Cloneable{
 
     }
 
+    public void stopPassive(Player p){
+
+    }
+
     public boolean CastAbility1(Player p) {
         if (QuirkName.equalsIgnoreCase("Quirkless")) {
             p.sendMessage("You are Quirkless!");

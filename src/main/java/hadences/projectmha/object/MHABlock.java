@@ -4,6 +4,7 @@ import hadences.projectmha.ProjectMHA;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -15,10 +16,14 @@ public class MHABlock {
     private Block block;
     private Material original_material;
     private int revert_seconds;
+    private Location location;
+    private Player Owner;
 
-    public MHABlock(Block block, Material change_material, int timer_seconds){
+    public MHABlock(Player p, Block block, Material change_material, int timer_seconds){
         this.block = block;
         this.revert_seconds = timer_seconds;
+        this.location = this.block.getLocation();
+        Owner = p;
         if(!MHABlocks.containsKey(block.getLocation())){
             this.original_material = block.getType();
             MHABlocks.put(block.getLocation(),this);
@@ -41,16 +46,38 @@ public class MHABlock {
         BlockTimers.put(key,sched);
     }
 
+    public Location getLocation(){
+        return location;
+    }
 
-    public void revert_now(Location key){
+    public boolean revert_now(){
+        Location key = block.getLocation();
         if(BlockTimers.containsKey(key)){
             BlockTimers.get(key).cancel();
             BlockTimers.remove(key);
+        }else{
+            return false;
         }
 
         block.setType(original_material);
+        return true;
     }
 
+    public Player getOwner() {
+        return Owner;
+    }
+
+    public void setOwner(Player owner) {
+        Owner = owner;
+    }
+
+    public Block getBlock() {
+        return block;
+    }
+
+    public Material getOriginal_material() {
+        return original_material;
+    }
 }
 class Revert extends BukkitRunnable {
 

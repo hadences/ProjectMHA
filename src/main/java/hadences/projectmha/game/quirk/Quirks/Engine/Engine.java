@@ -344,8 +344,10 @@ class Ability1{
 }
 
 class Ability2 implements Listener {
+    private Player player;
     int AbilityTimer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Engine.Abilities.Ability2.AbilityTimer");
     public void ability(Player p, Ability2 ability2){
+        player = p;
         p.getWorld().playSound(p.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_IMPACT,2,2);
         p.setWalkSpeed(0.8f);
         BukkitTask EngineTask = new EngineScheduler(p,ProjectMHA.getPlugin(ProjectMHA.class),ability2).runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),AbilityTimer*20);
@@ -355,15 +357,18 @@ class Ability2 implements Listener {
     @EventHandler
     public void passive(PlayerMoveEvent e) {
         Player p = e.getPlayer();
+        if(player != p) return;
         Location loc = p.getLocation();
-        if (playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase("Engine")) {
-            if (p.getWalkSpeed() == 0.5f) {
-                loc.getWorld().spawnParticle(Particle.CLOUD, loc, 5, 0.05, 0.05, 0.05, 0.05);
-                loc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc, 5, 0.05, 0.05, 0.05, 0.05);
-                loc.getWorld().spawnParticle(Particle.FLAME, loc, 5, 0.05, 0.05, 0.05, 0.05);
-            }
+        try {
+            if (playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase("Engine")) {
+                if (p.getWalkSpeed() == 0.5f) {
+                    loc.getWorld().spawnParticle(Particle.CLOUD, loc, 5, 0.05, 0.05, 0.05, 0.05);
+                    loc.getWorld().spawnParticle(Particle.SOUL_FIRE_FLAME, loc, 5, 0.05, 0.05, 0.05, 0.05);
+                    loc.getWorld().spawnParticle(Particle.FLAME, loc, 5, 0.05, 0.05, 0.05, 0.05);
+                }
 
-        }
+            }
+        }catch (Exception exception){}
 
     }
 }

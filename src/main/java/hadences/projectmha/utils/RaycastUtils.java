@@ -30,7 +30,7 @@ public class RaycastUtils {
                 return position;
             }
 
-            if (block != null && block.getType() != Material.AIR) {
+            if (block != null && block.isSolid() && block.getType() != Material.COBWEB) {
                 return position;
             }
          if(i == positions.size()-1){

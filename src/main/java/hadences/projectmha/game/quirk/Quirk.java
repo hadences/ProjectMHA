@@ -12,8 +12,12 @@ import hadences.projectmha.game.quirk.Quirks.Explosion.Explosion;
 import hadences.projectmha.game.quirk.Quirks.FaJin.FaJin;
 import hadences.projectmha.game.quirk.Quirks.HalfColdHalfHot.HalfColdHalfHot;
 import hadences.projectmha.game.quirk.Quirks.Hardening.Hardening;
+import hadences.projectmha.game.quirk.Quirks.Heal.Heal;
+import hadences.projectmha.game.quirk.Quirks.HellFlame.HellFlame;
+import hadences.projectmha.game.quirk.Quirks.Overhaul.Overhaul;
 import hadences.projectmha.game.quirk.Quirks.Permeation.Permeation;
 import hadences.projectmha.game.quirk.Quirks.Rewind.Rewind;
+import hadences.projectmha.game.quirk.Quirks.Rifle.Rifle;
 import hadences.projectmha.game.quirk.Quirks.Tape.Tape;
 import hadences.projectmha.game.quirk.Quirks.ZeroGravity.ZeroGravity;
 import net.kyori.adventure.text.Component;
@@ -74,6 +78,11 @@ public class Quirk implements Cloneable {
         else if(QUIRK_NAME.equalsIgnoreCase("Cremation")) this.QUIRKCASTMANAGER = new Cremation();
         else if(QUIRK_NAME.equalsIgnoreCase("Rewind")) this.QUIRKCASTMANAGER = new Rewind();
         else if(QUIRK_NAME.equalsIgnoreCase("Bloodcurdle")) this.QUIRKCASTMANAGER = new Bloodcurdle();
+        else if(QUIRK_NAME.equalsIgnoreCase("Rifle")) this.QUIRKCASTMANAGER = new Rifle();
+        //else if(QUIRK_NAME.equalsIgnoreCase("Overhaul")) this.QUIRKCASTMANAGER = new Overhaul();
+        else if(QUIRK_NAME.equalsIgnoreCase("Hellflame")) this.QUIRKCASTMANAGER = new HellFlame();
+        else if(QUIRK_NAME.equalsIgnoreCase("Heal")) this.QUIRKCASTMANAGER = new Heal();
+
 
     }
 
@@ -137,9 +146,11 @@ public class Quirk implements Cloneable {
         if(ProjectMHA.getPlugin(ProjectMHA.class).board.getScoreboard().getTeam(playerdata.get(p.getUniqueId()).getTEAM()).allowFriendlyFire() == false){
             for(Player e: console.getPlayerList()){
                 if(playerdata.get(p.getUniqueId()).getTEAM().equalsIgnoreCase(playerdata.get(e.getUniqueId()).getTEAM())){
-                    if(playerdata.get(e.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase(quirk)) {
-                        return true;
-                    }
+                    try {
+                        if (playerdata.get(e.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase(quirk)) {
+                            return true;
+                        }
+                    }catch (Exception exception){continue;}
                 }
             }
         }

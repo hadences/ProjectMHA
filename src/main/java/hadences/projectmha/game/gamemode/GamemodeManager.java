@@ -43,6 +43,10 @@ public class GamemodeManager implements Listener {
         }
     }
 
+    public void playintromusic(){
+
+    }
+
     public HashMap<UUID, Player> getLastDamager() {
         return LastDamager;
     }

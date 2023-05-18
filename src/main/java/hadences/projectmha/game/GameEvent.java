@@ -1,28 +1,23 @@
 package hadences.projectmha.game;
 
+import com.destroystokyo.paper.event.player.PlayerStartSpectatingEntityEvent;
 import hadences.projectmha.ProjectMHA;
 import hadences.projectmha.game.quirk.Cooldown;
-import hadences.projectmha.item.GameItems;
 import hadences.projectmha.player.Stamina;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_18_R1.entity.CraftPlayer;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.ItemSpawnEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.util.Vector;
+import org.bukkit.event.entity.*;
+import org.bukkit.event.player.*;
 
 import java.util.HashMap;
 
+import static hadences.projectmha.game.GameManager.console;
 import static hadences.projectmha.game.quirk.Cooldown.*;
 import static hadences.projectmha.player.PlayerManager.playerdata;
 
@@ -37,14 +32,33 @@ public class GameEvent implements Listener {
     public void takeDamage(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
+
+            //if the player falls in the void and is not in game, teleports the user back to spawn.
             if (playerdata.get(p.getUniqueId()).isIN_GAME() == false) {
+                if(e.getCause() == EntityDamageEvent.DamageCause.VOID) {
+                    p.teleport(p.getWorld().getSpawnLocation());
+                }
                 e.setCancelled(true);
                 return;
             }
+
+            //if the player falls in the void and is in game, teleport the player to lobby and kills the user.
+            if(playerdata.get(p.getUniqueId()).isIN_GAME() && e.getCause() == EntityDamageEvent.DamageCause.VOID){
+                e.setCancelled(true);
+                p.teleport(console.getArena().getLobbyspawn());
+                p.damage(p.getMaxHealth());
+                return;
+            }
+
+            if(((CraftPlayer)p).getHandle().getScore() == 0)
+                return;
+
             if (e.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 if (e.getDamage() <= 4.0f) {
                     e.setCancelled(true);
                     return;
+                }else if(e.getDamage() >= 14.0){
+                    e.setDamage(14.0);
                 }
                 if(playerdata.get(p.getUniqueId()).isFALL_DAMAGE() == false){
                     e.setCancelled(true);
@@ -52,6 +66,18 @@ public class GameEvent implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler
+    public void SpectatePlayers(PlayerStartSpectatingEntityEvent e){
+        if(playerdata.get(e.getPlayer().getUniqueId()).isALIVE()== false)
+        e.setCancelled(true);
+    }
+
+    @EventHandler
+    public void preventSpectaterTP(PlayerTeleportEvent e){
+        if(e.getCause() == PlayerTeleportEvent.TeleportCause.SPECTATE)
+            e.setCancelled(true);
     }
 
     @EventHandler
@@ -133,9 +159,15 @@ public class GameEvent implements Listener {
     }
 
     @EventHandler
+    public void swapHands(PlayerSwapHandItemsEvent e){
+        e.setCancelled(true);
+    }
+
+
+    @EventHandler
     public void stopRegenHealth(EntityRegainHealthEvent e){
-        if(e.getEntity() instanceof  Player){
-            if(playerdata.get(e.getEntity().getUniqueId()).isIN_GAME())
+        if(e.getEntity() instanceof Player){
+            if(playerdata.get(e.getEntity().getUniqueId()).isIN_GAME() && e.getRegainReason() == EntityRegainHealthEvent.RegainReason.EATING)
                 e.setCancelled(true);
         }
     }

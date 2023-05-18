@@ -4,14 +4,17 @@ import hadences.projectmha.ProjectMHA;
 import hadences.projectmha.arena.ArenaManager;
 import hadences.projectmha.chat.Chat;
 import hadences.projectmha.commands.summondummy.Dummy;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
+import static hadences.projectmha.config.MusicConfig.music;
 import static hadences.projectmha.game.GameManager.console;
 import static hadences.projectmha.arena.Arena.arenalist;
 
@@ -32,6 +35,12 @@ public class CommandManager implements CommandExecutor {
             return true;
         }
 
+        // /mha getHandlerList
+        if(args.length == 1 && args[0].equalsIgnoreCase("getHandlerList")){
+            p.sendMessage(HandlerList.getRegisteredListeners(ProjectMHA.getPlugin(ProjectMHA.class)).toString());
+            return true;
+        }
+
         // /mha create
         else if (args.length == 1 && args[0].equalsIgnoreCase("create")) {
             p.sendMessage(Chat.getConsoleName() + ChatColor.RED + " Invalid Syntax. Usage : /mha create <arena name>");
@@ -46,6 +55,14 @@ public class CommandManager implements CommandExecutor {
                 p.sendMessage(Chat.getConsoleName() + ChatColor.GREEN + " Arena " + ChatColor.WHITE + args[1] + ChatColor.GREEN + " created!");
                 ArenaManager.addArena(args[1]);
                 return true;
+            }
+        }
+
+        // /mha music
+        else if(args.length == 1 && args[0].equalsIgnoreCase("music")){
+            for(Player player: Bukkit.getOnlinePlayers()){
+                player.stopAllSounds();
+                player.playSound(player.getLocation(),music.get((int) (Math.random()*music.size())),0.1f,1f);
             }
         }
 

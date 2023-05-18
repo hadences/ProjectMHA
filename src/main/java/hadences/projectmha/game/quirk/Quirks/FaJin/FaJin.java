@@ -326,6 +326,7 @@ public class FaJin extends QuirkCastManager {
     }
 }
 
+// the ability 1 logicfor Fajin
 class Ability1{
 
     int KineticCharge = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.FaJin.Abilities.Ability1.KineticCharge");
@@ -376,6 +377,7 @@ class Ability1{
 
     }
 
+    //particle effect
     public void FaJinVisuals(Player p, Location loc){
         loc.getWorld().playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_IMPACT,2,0.5f);
         //draw effect
@@ -400,6 +402,8 @@ class Ability1{
     }
 }
 
+
+//second ability for the player
 class Ability2 {
 
     int AbilityTimer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.FaJin.Abilities.Ability2.AbilityTimer");
@@ -490,11 +494,15 @@ class Ultimate extends hadences.projectmha.game.quirk.Ultimate implements Listen
     public void Movement (PlayerMoveEvent e){
         Player p = e.getPlayer();
         Location loc = p.getLocation();
-        if (!playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase("FaJin"))
-            return;
-        if (inUltimate && player == p) {
-            loc.getWorld().spawnParticle(Particle.REDSTONE, loc.clone(), 1, 0.12, 0.12, 0.12, 0.5, new Particle.DustOptions(Color.fromRGB(41, 225, 225 ), 1.2f));
-        }
+
+        if(p != player) return;
+        try {
+            if (!playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase("FaJin"))
+                return;
+            if (inUltimate && player == p) {
+                loc.getWorld().spawnParticle(Particle.REDSTONE, loc.clone(), 1, 0.12, 0.12, 0.12, 0.5, new Particle.DustOptions(Color.fromRGB(41, 225, 225), 1.2f));
+            }
+        }catch (Exception exception){}
     }
 
     @Override
@@ -535,7 +543,6 @@ class RCAbility{
         loc.getWorld().spawnParticle(Particle.FLASH,loc,5,0.2,0.2,0.2,1.2);
 
         //Sound
-        loc.getWorld().playSound(loc, Sound.ENTITY_LIGHTNING_BOLT_IMPACT,2,2);
         loc.getWorld().playSound(loc, Sound.ENTITY_BLAZE_SHOOT,2,2);
 
         //Dash Ability

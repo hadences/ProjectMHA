@@ -315,6 +315,7 @@ class Ability1 {
         Damage damage = new Damage();
         List<Entity> target = (List<Entity>) endpoint.getNearbyEntities(hitbox,hitbox,hitbox);
         target = damage.cleanTargetList(p,target);
+        damage.damageList(p, (ArrayList<Entity>) target,playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY1_DAMAGE());
         for(Entity e : target){
             if(e.getUniqueId() != p.getUniqueId()){
                 BlackwhipAbilityEntity(e,p);

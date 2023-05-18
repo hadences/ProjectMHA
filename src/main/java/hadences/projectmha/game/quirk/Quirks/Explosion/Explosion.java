@@ -421,7 +421,7 @@ class Ultimate {
                 Location location = vectors.get(i).toLocation(p.getWorld());
                 drawExplosion(location,r);
                 playSound(location);
-                list.addAll(location.getNearbyEntities(r,r,r));
+                list.addAll(location.getNearbyEntities(r+0.5,r+0.5,r+0.5));
                 list = damage.removeDuplicates(list);
                 damage.damageList(p,list,playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getULT_DAMAGE());
 

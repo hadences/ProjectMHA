@@ -1,31 +1,30 @@
-package hadences.projectmha.game.quirk.Quirks.Tape;
+package hadences.projectmha.game.quirk.Quirks.Heal;
 
 import hadences.projectmha.ProjectMHA;
 import hadences.projectmha.chat.Chat;
 import hadences.projectmha.game.quirk.QuirkCastManager;
-import hadences.projectmha.game.quirk.UltimateTimer;
 import hadences.projectmha.object.MHABlock;
 import hadences.projectmha.utils.Damage;
 import hadences.projectmha.utils.RayTrace;
 import hadences.projectmha.utils.RaycastUtils;
 import hadences.projectmha.utils.VectorUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.*;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
+import static hadences.projectmha.game.quirk.Cooldown.cooldowns;
 import static hadences.projectmha.player.PlayerManager.playerdata;
 
-public class Tape extends QuirkCastManager {
+public class Heal extends QuirkCastManager {
     ProjectMHA mha = ProjectMHA.getPlugin(ProjectMHA.class);
 
     public Ability1 ability1 = new Ability1();
@@ -57,7 +56,7 @@ public class Tape extends QuirkCastManager {
     private Integer RCABILITY_STAMINACOST;
     private Integer RCABILITY_COOLDOWN;
 
-    private String QuirkName = "Tape";
+    private String QuirkName = "Heal";
 
     private double OG_ABILITY1_DAMAGE;
     private double OG_ABILITY2_DAMAGE;
@@ -77,7 +76,7 @@ public class Tape extends QuirkCastManager {
         return OG_RCABILITY_DAMAGE;
     }
 
-    public Tape() {
+    public Heal() {
         ABILITY1_DISPLAY_NAME = (String) mha.getConfig().get("Quirks." + QuirkName + ".Abilities.Ability1.Name");
         ABILITY1_DESCRIPTION = (String) mha.getConfig().get("Quirks." + QuirkName + ".Abilities.Ability1.Description");
         ABILITY1_DAMAGE =  2 * (double) mha.getConfig().get("Quirks." + QuirkName + ".Abilities.Ability1.Damage");
@@ -110,8 +109,7 @@ public class Tape extends QuirkCastManager {
 
 
     public boolean CastAbility1(Player p) {
-        ability1.ability(p);
-        return true;
+        return ability1.ability(p);
     }
 
     public boolean CastAbility2(Player p) {
@@ -120,14 +118,13 @@ public class Tape extends QuirkCastManager {
 
     public boolean CastUltimate(Player p) {
         broadcastUltimate(p);
-        mha.getServer().getPluginManager().registerEvents(ultimate,ProjectMHA.getPlugin(ProjectMHA.class));
-
-        ultimate.ability(p,ultimate);
+        ultimate.ability(p);
         return true;
     }
 
     public boolean CastRCAbility(Player p) {
-        return rcAbility.ability(p);
+        rcAbility.ability(p);
+        return true;
     }
 
     public String getABILITY1_DISPLAY_NAME() {
@@ -300,40 +297,63 @@ public class Tape extends QuirkCastManager {
 }
 
 class Ability1{
+    private Location location;
+    private Vector vector;
+    private int RegenerationTimer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Heal.Abilities.Ability1.RegenerationTimer");
+    private int RegenerationAmplifier = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Heal.Abilities.Ability1.RegenerationAmplifier");
+    private Damage damage = new Damage();
+    public boolean ability(Player p){
+        location = RaycastUtils.StartRaycast(p,3.5,1);
+        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT,0.5f,1);
+        return damage(p);
+    }
 
-    int tape_timer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ability1.TapeTimer");
+    public boolean damage(Player p){
+        damage = new Damage();
 
-    public void ability(Player p){
-        Damage damage = new Damage();
-        Location loc = p.getEyeLocation();
-        Vector dir = loc.getDirection();
-        RayTrace rayTrace = new RayTrace(loc.clone().add(loc.getDirection()).toVector(), new Vector(dir.getX(), dir.getY(), dir.getZ()));
-        ArrayList<Vector> positions = rayTrace.traverse(12, 1);
-        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_SPIDER_AMBIENT,2,2);
-        for (Vector v : positions) {
-            Location position = v.toLocation(p.getWorld());
-            damage.damageList(p, (ArrayList<Entity>) position.getNearbyEntities(0.5,0.5,0.5),playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY1_DAMAGE());
-            Block block = p.getWorld().getBlockAt(position);
-            if (block.getType() == Material.AIR) {
-                new MHABlock(p,block,Material.COBWEB,tape_timer);
-                position.getWorld().spawnParticle(Particle.WHITE_ASH,position,5,0.5,0.5,0.5,0.1);
+        List<Entity> target = (List<Entity>) location.getNearbyEntities(1,1,1);
+        target = damage.getTeamPlayers(p,target);
 
+        if(!target.isEmpty()) {
+            for (Entity e : target) {
+                if (e instanceof LivingEntity && e instanceof Player) {
+                    ((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,RegenerationTimer*20,RegenerationAmplifier-1));
+                    visuals(p);
+                    playsound(p);
+                    p.sendMessage(Chat.format("&eYou &ahealed &ean ally&c!"));
+                    return true;
+                }
             }
+        }
+        return false;
+    }
+
+
+    public void visuals(Player p){
+        location = p.getEyeLocation();
+        for (double theta = 0; theta < 2 * Math.PI; theta += Math.PI / 25) {
+            vector = VectorUtils.rotateVector(VectorUtils.rotateVector(new Vector(0.3 * Math.sin(theta), 0.8, 0.3 * Math.cos(theta)), -90, 90), p.getLocation().getYaw(), p.getLocation().getPitch());
+            location.getWorld().spawnParticle(Particle.REDSTONE, location.clone().add(vector), 5, 0.02, 0.02, 0.02, 0.02, new Particle.DustOptions(Color.fromRGB(3, 219, 1), 0.5f));
+
         }
     }
 
+    public void playsound(Player p){
+        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,0.5f,1);
+    }
 }
 
 class Ability2{
 
-    int TapeRange = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ability2.TapeRange");
-    int TapeTimer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ability2.TapeTimer");
-    double Tape_Radius = (double) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ability2.Tape_Radius");
-    RayTrace rayTrace;
+    private int HealRange = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Heal.Abilities.Ability2.HealRange");
+    private double Heal_Radius = (double) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Heal.Abilities.Ability2.Heal_Radius");
+    private RayTrace rayTrace;
+    private Vector vector;
+    private Damage damage = new Damage();
 
     public boolean ability(Player p){
         rayTrace = new RayTrace(p.getEyeLocation().toVector(),p.getEyeLocation().getDirection());
-        ArrayList<Vector> positions = rayTrace.traverse(TapeRange,1);
+        ArrayList<Vector> positions = rayTrace.traverse(HealRange,1);
         try {
             Location endpoint = getEndpoint(p, positions);
             showindicator(endpoint);
@@ -341,7 +361,7 @@ class Ability2{
             new BukkitRunnable(){
                 @Override
                 public void run() {
-                    createWeb(p,endpoint);
+                    AbsorbLogic(p,endpoint);
                     playsound(p,endpoint);
                 }
             }.runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),20);
@@ -354,7 +374,7 @@ class Ability2{
     public void showindicator(Location location){
         Vector pos;
         for(double t = 0; t < 2*Math.PI; t += Math.PI/32){
-            pos = new Vector(Tape_Radius*Math.sin(t),0.5,Tape_Radius*Math.cos(t));
+            pos = new Vector(Heal_Radius*Math.sin(t),0.5,Heal_Radius*Math.cos(t));
             location.getWorld().spawnParticle(Particle.REDSTONE, location.clone().add(pos), 10, 0.05, 0.05, 0.05, 0,new Particle.DustOptions(Color.fromRGB(255, 0, 0 ), 1.2F));
         }
     }
@@ -367,157 +387,90 @@ class Ability2{
         return null;
     }
 
-    public void createWeb(Player p,Location location){
-        location.add(new Vector(0,1,0));
-        for (double i = 0; i <= Math.PI; i += Math.PI / 10) {
-            double radius = Tape_Radius*Math.sin(i);
-            double y = Tape_Radius*Math.cos(i);
-            for (double a = 0; a < Math.PI * 2; a+= Math.PI / 10) {
-                double x = Math.cos(a) * radius;
-                double z = Math.sin(a) * radius;
-                location.add(x, y, z);
-                if(!location.getBlock().isSolid()) {
-                    new MHABlock(p,location.getBlock(), Material.COBWEB, TapeTimer);
-                    location.getWorld().spawnParticle(Particle.WHITE_ASH,location,5,0.5,0.5,0.5,0.1);
-                }
-                location.subtract(x, y, z);
-            }
+    public void AbsorbLogic(Player p,Location location){
+        location.add(new Vector(0,0.5,0));
+        for(double t = 0; t <= Math.PI*2; t+=Math.PI/50){
+            vector = new Vector(Heal_Radius*Math.sin(t), 0, Heal_Radius*Math.cos(t));
+            location.getWorld().spawnParticle(Particle.REDSTONE, location.clone().add(vector), 5, 0.02, 0.02, 0.02, 0.02, new Particle.DustOptions(Color.fromRGB(3, 219, 1), 1.5f));
         }
 
+        ArrayList<Entity> target =  (ArrayList<Entity>) damage.cleanTargetList(p, (List<Entity>) location.getNearbyEntities(Heal_Radius,Heal_Radius,Heal_Radius));
+        damage.damageList(p,target,playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY2_DAMAGE());
+        for(Entity e: target){
+            if(e instanceof Player){
+                healUser(p, playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY2_DAMAGE());
+                absorbanimation(p,location);
+                break;
+            }
+        }
+    }
+
+    public void absorbanimation(Player p, Location location){
+        rayTrace = new RayTrace(location.toVector(),p.getEyeLocation().toVector().subtract(location.toVector()).normalize());
+        ArrayList<Vector> positions = rayTrace.traverse(p.getEyeLocation().distance(location), 0.2);
+        for(Vector v : positions){
+            p.getWorld().spawnParticle(Particle.VILLAGER_HAPPY,v.toLocation(p.getWorld()),1,0,0,0,0);
+        }
+    }
+
+    public void healUser(Player p, double damage){
+        if((p.getHealth() + damage) >= p.getMaxHealth())
+            p.setHealth(p.getMaxHealth());
+        else
+            p.setHealth(p.getHealth() + damage);
     }
 
 
     public void playsound(Player p,Location location){
-        p.getWorld().playSound(location, Sound.ENTITY_SPIDER_AMBIENT,2,2);
-
+        p.getWorld().playSound(location, Sound.BLOCK_SCULK_SENSOR_BREAK,2f,1);
     }
 }
 
-class Ultimate implements Listener{
-    private int UltTimer_ticks = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ultimate.UltTimer") * 20;
-    private boolean inUltimate = false;
-    private Player player;
-
-    private int OG_Ability1CD;
-    private int OG_Ability2CD;
-    private int OG_RCAbilityCD;
-
-    private int Ability1CD;
-    private int Ability2CD;
-    private int RCAbilityCD;
-
-    @EventHandler
-    public void onMove(PlayerMoveEvent e){
-        Player p = e.getPlayer();
-        if(p != player) return;
-        if(!inUltimate) return;
-        p.getWorld().spawnParticle(Particle.WHITE_ASH,p.getLocation(),10,0.5,0.5,0.5,0.1);
-    }
-
-
-    public void ability(Player p,Ultimate ultimate){
-        player = p;
-        inUltimate = true;
-
-        OG_Ability1CD = playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY1_COOLDOWN();
-        OG_Ability2CD = playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY2_COOLDOWN();
-        OG_RCAbilityCD = playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getRCABILITY_COOLDOWN();
-
-        Ability1CD = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ultimate.Ability1CD");
-        Ability2CD = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ultimate.Ability2CD");
-        RCAbilityCD = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.Ultimate.RCAbilityCD");
-
-        //Set player cd lower
-        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY1_COOLDOWN(Ability1CD);
-        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY2_COOLDOWN(Ability2CD);
-        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setRCABILITY_COOLDOWN(RCAbilityCD);
-
-
-        p.sendMessage(Component.text(Chat.format("&eYou can now shoot &fTape &afaster&e!")));
-
-        if(UltimateTimer.UltTimer.containsKey(p.getName()))
-            UltimateTimer.UltTimer.replace(p.getName(),System.currentTimeMillis() + ((UltTimer_ticks/20) * 1000) );
-        else
-            UltimateTimer.UltTimer.put(p.getName(),System.currentTimeMillis() + ((UltTimer_ticks/20) * 1000) );
-
+class Ultimate {
+    private int UltTimer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Heal.Abilities.Ultimate.UltTimerBuff");
+    private double UltRadius = (double) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Heal.Abilities.Ultimate.UltRadius");
+    private Vector pos;
+    private Location location;
+    private Damage damage = new Damage();
+    public void ability(Player p){
+        location = p.getLocation();
+        playSound(p);
         new BukkitRunnable(){
+            int radius = 0;
             @Override
             public void run() {
-                HandlerList.unregisterAll((Listener) ultimate);
-                inUltimate = false;
+                for(double t = 0; t < 2*Math.PI; t += Math.PI/32){
+                    pos = new Vector(radius*Math.cos(t),0,radius*Math.sin(t));
+                    p.getWorld().spawnParticle(Particle.TOTEM,location.clone().add(pos),1,0,0,0,0);
+                }
 
-                playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY1_COOLDOWN(OG_Ability1CD);
-                playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY2_COOLDOWN(OG_Ability2CD);
-                playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setRCABILITY_COOLDOWN(OG_RCAbilityCD);
+                if(radius >= UltRadius) this.cancel();
 
+                radius++;
             }
-        }.runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class), UltTimer_ticks);
+        }.runTaskTimer(ProjectMHA.getPlugin(ProjectMHA.class),0,0);
+
+        ArrayList<Entity> target = (ArrayList<Entity>) location.getNearbyEntities(UltRadius,UltRadius,UltRadius);
+        target = (ArrayList<Entity>) damage.getTeamPlayers(p,target);
+        for(Entity e: target){
+            if(e instanceof Player){
+                e.sendMessage(Chat.format("&eYou gained &aRegrowth&c!"));
+                ((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,UltTimer*20,5-1));
+            }
+        }
     }
 
     public void playSound(Player p){
+        p.getWorld().playSound(location, Sound.ITEM_TOTEM_USE,1.5f,1);
+
     }
 }
 
-class RCAbility {
+class RCAbility{
 
-    int length = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.RCAbility.Tape_Length");
-    double hitbox = (double) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Tape.Abilities.RCAbility.Tape_Hitbox");
-
-    private Location loc;
-    private Location endpoint;
-
-    public boolean ability(Player p) {
-        loc = p.getLocation();
-        endpoint = RaycastUtils.StartRaycast(p,length,hitbox);
-        return pulllogic(p,endpoint);
-    }
-
-    public boolean pulllogic(Player p, Location endpoint) {
-        double length_from_origin = RaycastUtils.calculateDistance(loc,endpoint);
-
-        if (endpoint.getBlock().isSolid() && endpoint.getBlock().getType() != Material.BARRIER) {
-            playsound(p);
-            TapeAbilityBlock(endpoint,p);
-            visuals(p,length_from_origin,0,0);
-        }else{
-            p.playSound(p.getLocation(),Sound.BLOCK_ANVIL_LAND,1,1);
-            return false;
-        }
-        return true;
-    }
-
-    public void visuals(Player p, double length, float yaw, float pitch){
-        Vector pos;
-        loc = p.getEyeLocation();
-        double y = -0.1;
-        for(double t = 0; t <= length; t += 0.1){
-            pos = VectorUtils.rotateVector(new Vector(t,y,0),loc.getYaw()+yaw,loc.getPitch()+pitch);
-            //White Particle
-            loc.getWorld().spawnParticle(Particle.REDSTONE, loc.clone().add(pos), 10, 0.08, 0.08, 0.08, 0,new Particle.DustOptions(Color.fromRGB(255,255,255), 0.5F));
-        }
-    }
-
-    public void playsound(Player p){
-        p.getWorld().playSound(p.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 1.0f,2.0f);
-    }
-
-    public void TapeAbilityBlock(Location block, Player p){
-        new BukkitRunnable(){
-            Location playerLoc = p.getLocation();
-            Vector v;
-            int time = 0;
-            @Override
-            public void run() {
-                if(block.distance(playerLoc) < 4 || time > 80){
-                    p.setFallDistance(0.0f);
-                    this.cancel();
-                }
-                playerLoc = p.getLocation();
-                v = block.toVector().subtract(playerLoc.toVector());
-                p.setVelocity(v.normalize().multiply(1));
-                time++;
-            }
-        }.runTaskTimer(ProjectMHA.getPlugin(ProjectMHA.class),0,0);
+    int SpeedAmplifier = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Heal.Abilities.RCAbility.SpeedAmplifier");
+    public void ability(Player p){
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,10,SpeedAmplifier-1,true,true));
     }
 
 }

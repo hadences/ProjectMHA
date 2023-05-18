@@ -3,6 +3,7 @@ package hadences.projectmha.game.quirk.Quirks.Bloodcurdle;
 import hadences.projectmha.ProjectMHA;
 import hadences.projectmha.chat.Chat;
 import hadences.projectmha.game.quirk.QuirkCastManager;
+import hadences.projectmha.game.quirk.UltimateTimer;
 import hadences.projectmha.utils.Damage;
 import hadences.projectmha.utils.RayTrace;
 import hadences.projectmha.utils.RaycastUtils;
@@ -14,6 +15,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -134,7 +141,8 @@ public class Bloodcurdle extends QuirkCastManager {
     public boolean CastUltimate(Player p) {
         checkHashMap(p);
         broadcastUltimate(p);
-        ultimate.ability(p, MarkList);
+        mha.getServer().getPluginManager().registerEvents(ultimate,ProjectMHA.getPlugin(ProjectMHA.class));
+        ultimate.ability(p, ultimate);
         return true;
     }
 
@@ -381,8 +389,9 @@ class Ability2{
                 try {
                     Entity e = MarkList.get(p.getUniqueId()).get(i);
                     int stunTimer = (int) (Math.random() * StunChancePossibilities + 1);
+                    if(stunTimer == 1){stunTimer = 2;}
                     p.sendMessage(Chat.format("&eParalyzed &c" + e.getName() + " &efor &a" + stunTimer + " &eseconds&c!"));
-                    damage.stun(p, e, stunTimer, false);
+                    damage.immobilize(p, e, stunTimer);
                     e.sendMessage(Chat.format("&eParalyzed for &a" + stunTimer + " &eseconds&c!"));
                     p.playSound(e.getLocation(), Sound.ENTITY_ILLUSIONER_PREPARE_MIRROR, 2f, 2f);
                 }catch (Exception exception){}
@@ -394,10 +403,72 @@ class Ability2{
 
 }
 
-class Ultimate {
+class Ultimate implements Listener {
+    private boolean inUltimate = false;
+    private int UltTimer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Bloodcurdle.Abilities.Ultimate.UltTimer");
+    private int SpeedAmplifier = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Bloodcurdle.Abilities.Ultimate.SpeedAmplifier");
+    private int RengenAmplifier = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Bloodcurdle.Abilities.Ultimate.RegenerationAmplifier");
+    private int JumpAmplifier = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Bloodcurdle.Abilities.Ultimate.JumpAmplifier");
 
-    public void ability(Player p, HashMap<UUID,ArrayList<Entity>> MarkList){
-        
+    private double BuffDamage = (double) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Bloodcurdle.Abilities.Ultimate.BuffDamage");
+    private Player player;
+    @EventHandler
+    public void onKill(EntityDeathEvent e){
+        if(!(e.getEntity() instanceof LivingEntity)) return;
+        if(e.getEntity().getKiller() == player && inUltimate){
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,100,SpeedAmplifier-1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,100,RengenAmplifier-1));
+            player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,100,JumpAmplifier-1));
+
+            player.playSound(player.getLocation(),Sound.BLOCK_SCULK_SENSOR_BREAK,2,0.5f);
+        }
+    }
+
+    @EventHandler
+    public void Movement (PlayerMoveEvent e){
+        Player p = e.getPlayer();
+        Location loc = p.getLocation();
+        if (!playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase("Bloodcurdle"))
+            return;
+        if (inUltimate && player == p) {
+            loc.getWorld().spawnParticle(Particle.REDSTONE, loc.clone(), 1, 0.12, 0.12, 0.12, 0.5, new Particle.DustOptions(Color.fromRGB(206, 0, 0), 1.2f));
+        }
+    }
+
+    public void ability(Player p, Ultimate ultimate){
+        inUltimate = true;
+        player = p;
+        p.getWorld().playSound(p.getLocation(),Sound.ENTITY_WITHER_SPAWN,1f,2f);
+        //send message
+        p.sendMessage(Component.text(Chat.format("&eUser regenerates &chealth &eand gains a &bspeed &eboost for each &4kill!&c")));
+        p.sendMessage(Component.text(Chat.format("&7Slash &eability damage increased by &c" + BuffDamage + "&c!")));
+        //Buff Damage
+        playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY1_DAMAGE(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY1_DAMAGE() +(2*BuffDamage));
+        //set UltTimer
+        if(UltimateTimer.UltTimer.containsKey(p.getName()))
+            UltimateTimer.UltTimer.replace(p.getName(),System.currentTimeMillis() + ((UltTimer) * 1000) );
+        else
+            UltimateTimer.UltTimer.put(p.getName(),System.currentTimeMillis() + ((UltTimer) * 1000) );
+
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,100,SpeedAmplifier-1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,100,RengenAmplifier-1));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP,100,JumpAmplifier-1));
+
+        new BukkitRunnable(){
+            @Override
+            public void run() {
+                p.removePotionEffect(PotionEffectType.REGENERATION);
+                p.removePotionEffect(PotionEffectType.SPEED);
+                p.removePotionEffect(PotionEffectType.JUMP);
+
+                inUltimate = false;
+                HandlerList.unregisterAll((Listener) ultimate);
+
+                playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().setABILITY1_DAMAGE(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getOG_ABILITY1_DAMAGE());
+            }
+        }.runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),UltTimer*20);
+
+
     }
 
     public void playSound(Player p){
@@ -489,7 +560,7 @@ class RCAbility{
         double t = 0;
         int u = 0;
         Vector pos;
-        for (double y = 0; y < teleport.distance(eyeloc); y += 0.02) {
+        for (double y = 0; y < teleport.distance(eyeloc); y += 0.1) {
             x = 0.4 * Math.cos(t);
             z = 0.4 * Math.sin(t);
 
@@ -498,7 +569,7 @@ class RCAbility{
             pos = VectorUtils.rotateVector(pos, yaw, pitch);
             p.getWorld().spawnParticle(Particle.REDSTONE, eyeloc.clone().add(pos), 1, 0, 0, 0, 0.1, new Particle.DustOptions(Color.fromRGB(255, 255, 255), 0.8f));
 
-            pos = new Vector(0, 0.4 * Math.cos(t) + y, 0.2 * Math.cos(t) + 0.1);
+            /*pos = new Vector(0, 0.4 * Math.cos(t) + y, 0.2 * Math.cos(t) + 0.1);
             pos = VectorUtils.rotateVector(pos, yaw, pitch);
             p.getWorld().spawnParticle(Particle.REDSTONE, eyeloc.clone().add(pos), 5, 0, 0, 0, 0, new Particle.DustOptions(Color.fromRGB(208, 46, 46), 0.4f));
 
@@ -509,7 +580,7 @@ class RCAbility{
             pos = new Vector(0, 0.4 * Math.cos(t) + y, 0.2 * Math.cos(t) - 0.1);
             pos = VectorUtils.rotateVector(pos, yaw, pitch);
             p.getWorld().spawnParticle(Particle.REDSTONE, eyeloc.clone().add(pos), 5, 0, 0, 0, 0, new Particle.DustOptions(Color.fromRGB(251, 46, 46), 0.4f));
-
+*/
             u += 1;
             t += Math.PI / 32;
         }

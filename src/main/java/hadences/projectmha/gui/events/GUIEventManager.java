@@ -2,6 +2,7 @@ package hadences.projectmha.gui.events;
 
 import hadences.projectmha.commands.summondummy.Dummy;
 import hadences.projectmha.game.gamemode.FFA;
+import hadences.projectmha.game.gamemode.HeroVsVillain;
 import hadences.projectmha.game.gamemode.TDM;
 import hadences.projectmha.game.quirk.Quirk;
 import hadences.projectmha.game.gamemode.Playground;
@@ -61,6 +62,10 @@ public class GUIEventManager implements Listener {
             updateAllTeamMenu();
         }else if (gm.equalsIgnoreCase("Team-Deathmatch")) {
             console.setGamemodeManager(new TDM());
+            console.updateGamemodeSettings(gm);
+            updateAllTeamMenu();
+        }else if (gm.equalsIgnoreCase("Hero-vs-Villain")) {
+            console.setGamemodeManager(new HeroVsVillain());
             console.updateGamemodeSettings(gm);
             updateAllTeamMenu();
         }

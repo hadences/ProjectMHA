@@ -46,8 +46,10 @@ public class FFA extends GamemodeManager implements Listener {
         Player damager = (Player) e.getDamager();
         if(LastDamager.containsKey(player.getUniqueId())){
             LastDamager.replace(player.getUniqueId(),damager);
+            return;
         }else{
             LastDamager.put(player.getUniqueId(),damager);
+            return;
         }
 
         }
@@ -68,8 +70,11 @@ public class FFA extends GamemodeManager implements Listener {
             pm.setABILITY_USAGE(true);
             pm.setCAN_MOVE(true);
         }
+        console.setCDUltimate();
+
     }
 
+    //resets the player data back to the regular game
     public void end() {
         resetTeams(ds.board.getScoreboard().getTeams());
         PlayerManager pm;
@@ -89,14 +94,17 @@ public class FFA extends GamemodeManager implements Listener {
         }
     }
 
+    //end game logic
     public void endgame() {
         //shows a title saying that the game ended
         sendTitleToAll(Chat.format("&c[&eGame Ended&c]"), printWinnerStatement());
         //set everyone to gamemode spectator and play sound
         for (Player p : playerlist) {
+            console.endPassives();
             p.setGameMode(GameMode.SPECTATOR);
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5f, 1.0f);
         }
+        grantWins();
         //after 5 seconds teleport players back to spawn
         //reset all player values
         new BukkitRunnable() {
@@ -105,6 +113,14 @@ public class FFA extends GamemodeManager implements Listener {
                 end();
             }
         }.runTaskLater(ds, 5 * 20L);
+    }
+
+    public void grantWins(){
+        for(Player p: playerlist){
+            if(p.getName().contains(Winner)){
+                playerdata.get(p.getUniqueId()).setWINS(playerdata.get(p.getUniqueId()).getWINS()+1);
+            }
+        }
     }
 
     public String printWinnerStatement() {
@@ -276,14 +292,18 @@ public class FFA extends GamemodeManager implements Listener {
                     Bukkit.broadcast(Component.text(Chat.format("&6" + p.getName() + " &eeliminated by &6" + p.getKiller().getName())));
                     //Increment killer points
                     incrementPlayerKillCount(e.getEntity().getKiller());
-
+                    playerdata.get(p.getKiller().getUniqueId()).setSTAMINA(console.getStartingStamina());
                     showKillCount();
+                    p.getKiller().playSound(p.getKiller().getLocation(),Sound.ENTITY_EXPERIENCE_ORB_PICKUP,0.5f,2f);
                 }else {
                     try {
                         //Death Message
                         Bukkit.broadcast(Component.text(Chat.format("&6" + p.getName() + " &eeliminated by &6" + LastDamager.get(p.getUniqueId()).getName())));
                         //Increment killer points
                         incrementPlayerKillCount(LastDamager.get(p.getUniqueId()));
+                        playerdata.get(LastDamager.get(p.getUniqueId()).getUniqueId()).setSTAMINA(console.getStartingStamina());
+                        LastDamager.get(p.getUniqueId()).playSound(LastDamager.get(p.getUniqueId()).getLocation(),Sound.ENTITY_EXPERIENCE_ORB_PICKUP,0.5f,2f);
+
                         showKillCount();
                     }catch (Exception exception){
                         Bukkit.broadcast(Component.text(Chat.format("&6" + p.getName() + " &eeliminated&c!")));

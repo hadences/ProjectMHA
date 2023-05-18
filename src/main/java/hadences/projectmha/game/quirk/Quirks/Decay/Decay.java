@@ -11,6 +11,7 @@ import hadences.projectmha.utils.VectorUtils;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -325,10 +326,12 @@ class Ability1{
         for(Entity e: target){
             if(e instanceof LivingEntity){
                 playSound(e.getLocation());
+                ((LivingEntity) e).damage(0.1,p);
                 ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.WITHER,DecayTimer*20, DecayAmplifier));
                 return;
             }
         }
+        damage.damageList(p,target,playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().getABILITY1_DAMAGE());
     }
 
     public void visuals(Player p){
@@ -359,25 +362,30 @@ class Ability2 implements Listener {
     int DecayTimer = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Decay.Abilities.Ability2.DecayTimer");
     int DecayAmplifier = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Decay.Abilities.Ability2.DecayAmplifier");
 
-
     @EventHandler
     public void decayPlayer(EntityMoveEvent e){
-        if(e.hasExplicitlyChangedBlock()){
-            if(e.getEntity() instanceof LivingEntity){
-                if(e.getEntity().getLocation().subtract(new Vector(0,1,0)).getBlock().getType() == Material.DEAD_BRAIN_CORAL_BLOCK && MHABlocks.containsKey(e.getEntity().getLocation().subtract(new Vector(0,1,0)).getBlock().getLocation())) {
-                    (e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER,DecayTimer*20, DecayAmplifier));
-                }
+        if(e.getEntity() instanceof LivingEntity && !(e.getEntity() instanceof Player)) {
+            if (e.getEntity().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getType() == Material.DEAD_BRAIN_CORAL_BLOCK && MHABlocks.containsKey(e.getEntity().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getLocation())) {
+                (e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
             }
         }
     }
 
     @EventHandler
     public void decayPlayer(PlayerMoveEvent e){
-        if(e.hasExplicitlyChangedBlock()){
-            if(e.getPlayer() != player)
-                if (e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getType() == Material.DEAD_BRAIN_CORAL_BLOCK && MHABlocks.containsKey(e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getLocation())) {
-                    (e.getPlayer()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
+
+        Block block = e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock();
+        try {
+            if (e.getPlayer() != player && MHABlocks.get(block.getLocation()).getOwner() != e.getPlayer())
+                if (block.getType() == Material.DEAD_BRAIN_CORAL_BLOCK && MHABlocks.containsKey(e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getLocation())) {
+                    if ((!playerdata.get(MHABlocks.get(block.getLocation()).getOwner().getUniqueId()).getTEAM().contains(playerdata.get(e.getPlayer().getUniqueId()).getTEAM())))
+                        (e.getPlayer()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
+                    if (playerdata.get(e.getPlayer().getUniqueId()).getTEAM().contains(playerdata.get(MHABlocks.get(block.getLocation()).getOwner().getUniqueId()).getTEAM()) && ProjectMHA.getPlugin(ProjectMHA.class).board.getScoreboard().getTeam(playerdata.get(MHABlocks.get(block.getLocation()).getOwner().getUniqueId()).getTEAM()).allowFriendlyFire() == true)
+                        (e.getPlayer()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
+                    e.getPlayer().damage(0.1, player);
+
                 }
+        }catch (Exception exception){
 
         }
     }
@@ -408,12 +416,13 @@ class Ability2 implements Listener {
 
                 if(i < positions.size()-1-2){
                     if(positions1.get(i).toLocation(p.getWorld()).getBlock().isSolid())
-                        new MHABlock(positions1.get(i).toLocation(p.getWorld()).getBlock(),Material.DEAD_BRAIN_CORAL_BLOCK,decay_block_seconds);
+                        new MHABlock(p,DecayCheckTopBlock(p,positions1.get(i).toLocation(p.getWorld())).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
+
                     if(positions2.get(i).toLocation(p.getWorld()).getBlock().isSolid())
-                        new MHABlock(positions2.get(i).toLocation(p.getWorld()).getBlock(),Material.DEAD_BRAIN_CORAL_BLOCK,decay_block_seconds);
+                        new MHABlock(p,DecayCheckTopBlock(p,positions2.get(i).toLocation(p.getWorld())).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
                 }
                 if(positions.get(i).toLocation(p.getWorld()).getBlock().isSolid())
-                    new MHABlock(positions.get(i).toLocation(p.getWorld()).getBlock(),Material.DEAD_BRAIN_CORAL_BLOCK,decay_block_seconds);
+                    new MHABlock(p,DecayCheckTopBlock(p,positions.get(i).toLocation(p.getWorld())).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
                 positions.get(i).toLocation(p.getWorld()).getWorld().playSound(positions.get(i).toLocation(p.getWorld()).clone().add(new Vector(0, 0.4, 0)), Sound.BLOCK_FIRE_EXTINGUISH, 0.2f, 1f);
                 positions.get(i).toLocation(p.getWorld()).getWorld().spawnParticle(Particle.ASH,positions.get(i).toLocation(p.getWorld()), 10, 0.12, 0.12, 0.12, 0.01);
 
@@ -432,6 +441,13 @@ class Ability2 implements Listener {
 
         return true;
     }
+    public Location DecayCheckTopBlock(Player p, Location location){
+        if(location.clone().add(new Vector(0,1,0)).getBlock().isSolid() && location.clone().add(new Vector(0,1,0)).getBlock().isCollidable() && location.clone().add(new Vector(0,1,0)).getBlock().getType() != Material.BARRIER){
+            new MHABlock(p,(location).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
+            DecayCheckTopBlock(p,location.add(new Vector(0,1,0)));
+        }
+        return location;
+    }
 
 }
 
@@ -444,27 +460,32 @@ class Ultimate implements Listener{
 
     @EventHandler
     public void decayPlayer(EntityMoveEvent e){
-        if(e.hasExplicitlyChangedBlock()){
-            if(e.getEntity() instanceof LivingEntity) {
+            if(e.getEntity() instanceof LivingEntity && !(e.getEntity() instanceof Player)) {
                 if (e.getEntity().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getType() == Material.DEAD_BRAIN_CORAL_BLOCK && MHABlocks.containsKey(e.getEntity().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getLocation())) {
                     (e.getEntity()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
                 }
-            }
         }
     }
 
     @EventHandler
     public void decayPlayer(PlayerMoveEvent e){
-        if(e.hasExplicitlyChangedBlock()){
-            if(e.getPlayer() != player)
-                if (e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getType() == Material.DEAD_BRAIN_CORAL_BLOCK && MHABlocks.containsKey(e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getLocation())) {
-                    (e.getPlayer()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
+
+        Block block = e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock();
+        try {
+            if (e.getPlayer() != player && MHABlocks.get(block.getLocation()).getOwner() != e.getPlayer())
+                if (block.getType() == Material.DEAD_BRAIN_CORAL_BLOCK && MHABlocks.containsKey(e.getPlayer().getLocation().subtract(new Vector(0, 1, 0)).getBlock().getLocation())) {
+                    if ((!playerdata.get(MHABlocks.get(block.getLocation()).getOwner().getUniqueId()).getTEAM().contains(playerdata.get(e.getPlayer().getUniqueId()).getTEAM())))
+                        (e.getPlayer()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
+                    if (playerdata.get(e.getPlayer().getUniqueId()).getTEAM().contains(playerdata.get(MHABlocks.get(block.getLocation()).getOwner().getUniqueId()).getTEAM()) && ProjectMHA.getPlugin(ProjectMHA.class).board.getScoreboard().getTeam(playerdata.get(MHABlocks.get(block.getLocation()).getOwner().getUniqueId()).getTEAM()).allowFriendlyFire() == true)
+                        (e.getPlayer()).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, DecayTimer * 20, DecayAmplifier));
+                    e.getPlayer().damage(0.1, player);
+
                 }
+        }catch (Exception exception){
 
         }
     }
-
-    public boolean ability(Player p, Ultimate ultimate){
+        public boolean ability(Player p, Ultimate ultimate){
         player = p;
         if(!p.getLocation().subtract(new Vector(0,0.5,0)).getBlock().isSolid()){p.sendMessage(Component.text(Chat.format("&eYou must be on the &cground&e!"))); return false;}
         Location location = p.getLocation();
@@ -482,7 +503,7 @@ class Ultimate implements Listener{
                     pos = new Vector(r*Math.sin(t),0,r*Math.cos(t));
 
                     if(location.clone().add(pos).getBlock().isSolid()) {
-                        new MHABlock(DecayCheckTopBlock(location.clone().add(pos)).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
+                        new MHABlock(p,DecayCheckTopBlock(p,location.clone().add(pos)).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
                     }
                 }
 
@@ -503,10 +524,10 @@ class Ultimate implements Listener{
         return true;
     }
 
-    public Location DecayCheckTopBlock(Location location){
+    public Location DecayCheckTopBlock(Player p,Location location){
         if(location.clone().add(new Vector(0,1,0)).getBlock().isSolid() && location.clone().add(new Vector(0,1,0)).getBlock().isCollidable() && location.clone().add(new Vector(0,1,0)).getBlock().getType() != Material.BARRIER){
-            new MHABlock((location).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
-            DecayCheckTopBlock(location.add(new Vector(0,1,0)));
+            new MHABlock(p,(location).getBlock(), Material.DEAD_BRAIN_CORAL_BLOCK, decay_block_seconds);
+            DecayCheckTopBlock(p,location.add(new Vector(0,1,0)));
         }
         return location;
     }

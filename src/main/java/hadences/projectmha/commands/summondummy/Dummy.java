@@ -26,7 +26,7 @@ public class Dummy implements Listener {
 
     public void spawn(Player p){
         //Armor
-        ItemStack playerhead = new ItemStack(Material.GLASS);
+        ItemStack playerhead = new ItemStack(Material.DIAMOND);
         ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
         ItemMeta headmeta = playerhead.getItemMeta();
         LeatherArmorMeta meta = (LeatherArmorMeta) chestplate.getItemMeta();

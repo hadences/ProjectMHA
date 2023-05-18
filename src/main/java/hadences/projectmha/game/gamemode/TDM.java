@@ -66,6 +66,8 @@ public class TDM extends GamemodeManager implements Listener {
             pm.setABILITY_USAGE(true);
             pm.setCAN_MOVE(true);
         }
+        console.setCDUltimate();
+
     }
 
     public void end() {
@@ -92,9 +94,11 @@ public class TDM extends GamemodeManager implements Listener {
         sendTitleToAll(Chat.format("&c[&eGame Ended&c]"), printWinnerStatement());
         //set everyone to gamemode spectator and play sound
         for (Player p : playerlist) {
+            console.endPassives();
             p.setGameMode(GameMode.SPECTATOR);
             p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 0.5f, 1.0f);
         }
+        grantWins();
         //after 5 seconds teleport players back to spawn
         //reset all player values
         new BukkitRunnable() {
@@ -103,6 +107,14 @@ public class TDM extends GamemodeManager implements Listener {
                 end();
             }
         }.runTaskLater(ds, 5 * 20L);
+    }
+
+    public void grantWins(){
+        for(Player p: playerlist){
+            if(Winner.contains(playerdata.get(p.getUniqueId()).getTEAM())){
+                playerdata.get(p.getUniqueId()).setWINS(playerdata.get(p.getUniqueId()).getWINS()+1);
+            }
+        }
     }
 
     public String printWinnerStatement() {
@@ -212,12 +224,16 @@ public class TDM extends GamemodeManager implements Listener {
                 if(p.getKiller() != null) {
                     //Death Message
                     Bukkit.broadcast(Component.text(Chat.format("" + ds.board.getScoreboard().getTeam(playerdata.get(p.getUniqueId()).getTEAM()).getColor() + p.getName() + " &eeliminated by " + ds.board.getScoreboard().getTeam(playerdata.get(p.getKiller().getUniqueId()).getTEAM()).getColor() + p.getKiller().getName())));
+                    playerdata.get(p.getKiller().getUniqueId()).setSTAMINA(console.getStartingStamina());
+                    p.getKiller().playSound(p.getKiller().getLocation(),Sound.ENTITY_EXPERIENCE_ORB_PICKUP,0.5f,2f);
 
                     incrementTeamScore(ds.board.getScoreboard().getTeam(playerdata.get(p.getKiller().getUniqueId()).getTEAM()));
                 }else {
                     try {
                         //Death Message
                         Bukkit.broadcast(Component.text(Chat.format("" + ds.board.getScoreboard().getTeam(playerdata.get(p.getUniqueId()).getTEAM()).getColor() + p.getName() + " &eeliminated by " + ds.board.getScoreboard().getTeam(playerdata.get(LastDamager.get(p.getUniqueId()).getUniqueId()).getTEAM()).getColor() + LastDamager.get(p.getUniqueId()).getName())));
+                        playerdata.get(LastDamager.get(p.getUniqueId()).getUniqueId()).setSTAMINA(console.getStartingStamina());
+                        LastDamager.get(p.getUniqueId()).playSound(LastDamager.get(p.getUniqueId()).getLocation(),Sound.ENTITY_EXPERIENCE_ORB_PICKUP,0.5f,2f);
 
                         incrementTeamScore(ds.board.getScoreboard().getTeam(playerdata.get(LastDamager.get(p.getUniqueId()).getUniqueId()).getTEAM()));
                     }catch (Exception exception){
@@ -261,7 +277,7 @@ public class TDM extends GamemodeManager implements Listener {
 
         //Team Red
         Team Red = Board.registerNewTeam("&cRed");
-        Red.setAllowFriendlyFire(true);
+        Red.setAllowFriendlyFire(false);
         Red.setCanSeeFriendlyInvisibles(false);
         Red.setPrefix(Chat.format("&cRed &f"));
         Red.setDisplayName(Chat.format("&cRed &f"));

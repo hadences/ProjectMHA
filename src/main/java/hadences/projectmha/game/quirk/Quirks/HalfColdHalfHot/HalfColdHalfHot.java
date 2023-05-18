@@ -318,11 +318,12 @@ class Ability1{
         int freeze_sec = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.HalfCold-HalfHot.Abilities.Ability1.FreezeTimer");
 
         Damage damage = new Damage();
-        damage.damageList(p, (ArrayList<Entity>) loc.getNearbyEntities(0.5,0.5,0.5),dmg);
-        damage.stun(p, (ArrayList<Entity>) loc.getNearbyEntities(0.5,0.5,0.5), freeze_sec);
+        damage.damageList(p, (ArrayList<Entity>) loc.getNearbyEntities(1.5,1.5,1.5),dmg);
+        damage.stun(p, (ArrayList<Entity>) loc.getNearbyEntities(1.5,1.5,1.5), freeze_sec);
 
     }
 
+    //ice wall takes the paramater of a player and spawns ice based on the where it is
     public void ice_wall(Player p){
 
         Ice ice = new Ice();
@@ -536,6 +537,7 @@ class Ultimate {
     }
 
 
+    //fire work effect
     public void spawnBigBang(Player p,Location loc){
         spawnFirework(p,loc.clone());
         //spawnFirework(p,loc.clone().add(new Vector(0,0.2,0)));
@@ -583,6 +585,8 @@ class Ultimate {
     }
 }
 
+
+//right click ability of the player 
 class RCAbility{
 
     public void ability(Player p){
@@ -710,10 +714,9 @@ class Ice{
         startTimer(ice,ticks);
     }
 
-
+//grabs the location of the player, the yaw and pitch; uses the custom model data to figure out what the ice is and checks if the ice is considered small;
     public void SpawnIce_Wall(Location location, float yaw, float pitch, int CustomModelData, boolean small){
         int ticks = 20 * (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.HalfCold-HalfHot.Object.Ice_Wall.Timer");
-
         ItemStack ICE_WALL_MODEL = new ItemStack(Material.WHITE_DYE);
         ItemMeta meta = ICE_WALL_MODEL.getItemMeta();
         meta.setCustomModelData(CustomModelData);

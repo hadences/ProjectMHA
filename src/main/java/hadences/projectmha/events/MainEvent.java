@@ -1,8 +1,12 @@
 package hadences.projectmha.events;
 
 import com.destroystokyo.paper.event.player.PlayerJumpEvent;
+import hadences.projectmha.chat.Chat;
 import hadences.projectmha.player.PlayerManager;
 import hadences.projectmha.ProjectMHA;
+import io.papermc.paper.event.player.AsyncChatEvent;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -52,6 +56,13 @@ public class MainEvent implements Listener {
             playerdata.put(p.getUniqueId(), new PlayerManager(p, 0));
             init(p);
         }
+    }
+
+    @EventHandler
+    public void onChat(AsyncChatEvent e){
+        e.setCancelled(true);
+        Player p = e.getPlayer();
+        Bukkit.broadcast(Component.text(Chat.format( "&e" + playerdata.get(p.getUniqueId()).getWINS() +" &6&l♚ &d"+ PlainTextComponentSerializer.plainText().serialize(p.displayName()) + "&7: &f" + PlainTextComponentSerializer.plainText().serialize(e.message()))));
     }
 
     @EventHandler

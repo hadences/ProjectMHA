@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.CrossbowMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
@@ -27,8 +28,10 @@ public class GameItems {
     public void givePlayerQuirkInfo(Player p, int slot){
         //QuirkInfo = new ItemStack(Material.getMaterial((String) mha.getConfig().get("Quirks." + playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME() + ".Item")));
         QuirkInfo = new ItemStack(Material.GRAY_DYE);
+
         meta = QuirkInfo.getItemMeta();
-        meta.setCustomModelData(1);
+        int cmd = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks."+playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME()+".CustomModelData");
+        meta.setCustomModelData(cmd);
         meta.displayName(Component.text(Chat.format("&c&l<< &eRC Ability &c&l>>")));
 
         String Name = (String) mha.getConfig().get("Quirks." + playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME() + ".Abilities.RCAbility.Name");
@@ -49,6 +52,7 @@ public class GameItems {
         meta.setLocalizedName("skill");
         meta.lore(lore);
         QuirkInfo.setItemMeta(meta);
+
         p.getInventory().setItem(slot,QuirkInfo);
     }
 

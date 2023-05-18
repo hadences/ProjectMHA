@@ -399,23 +399,27 @@ class Ultimate implements Listener {
         PhaseCauses.add(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK);
         PhaseCauses.add(EntityDamageEvent.DamageCause.PROJECTILE);
 
-        if(e.getEntity() instanceof Player){
+        if(e.getEntity() instanceof Player) {
             Player p = (Player) e.getEntity();
-            if(playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase("Permeation") && inUltimate && p == player){
-                e.setCancelled(true);
-                if(!PhaseCauses.contains(e.getCause())) return;
-                playSound(p);
 
-                p.setGameMode(GameMode.SPECTATOR);
-                p.setVelocity(new Vector(0,0.1,0));
-                new BukkitRunnable(){
-                    @Override
-                    public void run() {
-                        playSound(p);
-                        p.setGameMode(GameMode.ADVENTURE);
-                    }
-                }.runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class),3);
-            }
+            if (player != p) return;
+            try {
+                if (playerdata.get(p.getUniqueId()).getQUIRK().getQUIRK_NAME().equalsIgnoreCase("Permeation") && inUltimate && p == player) {
+                    e.setCancelled(true);
+                    if (!PhaseCauses.contains(e.getCause())) return;
+                    playSound(p);
+
+                    p.setGameMode(GameMode.SPECTATOR);
+                    p.setVelocity(new Vector(0, 0.1, 0));
+                    new BukkitRunnable() {
+                        @Override
+                        public void run() {
+                            playSound(p);
+                            p.setGameMode(GameMode.ADVENTURE);
+                        }
+                    }.runTaskLater(ProjectMHA.getPlugin(ProjectMHA.class), 3);
+                }
+            }catch (Exception exception){}
         }
     }
 

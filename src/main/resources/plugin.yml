@@ -11,3 +11,6 @@ commands:
   dev:
     usage: /dev
     description: toggles on dev mode.
+  test:
+    usage: /test
+    description: debugging command

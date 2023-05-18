@@ -68,6 +68,7 @@ public class GameManager {
         //this.minutes = (int) mha.getConfig().get("Game.Settings.Minutes");
         //this.Seconds = (int) mha.getConfig().get("Game.Settings.Seconds");
         gamemodeManager = null;
+
     }
 
     public void updateGamemodeSettings(String Gamemode){
@@ -175,19 +176,20 @@ public class GameManager {
                 }
                 if (time == 0) {
                     inLobby = false;
-                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "5");
+                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "5" + ChatColor.YELLOW + " seconds");
                 }
                 if (time == 1) {
-                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "4");
+                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "4" + ChatColor.YELLOW + " seconds");
                 }
                 if (time == 2) {
-                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "3");
+                    gamemodeManager.playintromusic();
+                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "3" + ChatColor.YELLOW + " seconds");
                 }
                 if (time == 3) {
-                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "2");
+                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "2" + ChatColor.YELLOW + " seconds");
                 }
                 if (time == 4) {
-                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "1");
+                    Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "1" + ChatColor.YELLOW + " second");
                 }
                 if (time == 5) {
                     Bukkit.broadcastMessage(ChatColor.YELLOW + "Game Starting in " + ChatColor.RED + "Starting!");
@@ -220,7 +222,7 @@ public class GameManager {
                 if (time == 4) {
                     sendTitleToAll("START");
                     playsoundtoAll(Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0f);
-                    setCDUltimate();
+                    //setCDUltimate();
                     setPassives();
                     gamemodeManager.start();
                     inGame = true;
@@ -234,6 +236,13 @@ public class GameManager {
     public void setPassives(){
         for(Player p : getPlayerList()){
             playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().initPassive(p);
+        }
+    }
+
+    public void endPassives(){
+        for(Player p : getPlayerList()){
+            playerdata.get(p.getUniqueId()).getQUIRK().getQUIRKCASTMANAGER().stopPassive(p);
+
         }
     }
 
@@ -447,4 +456,5 @@ public class GameManager {
     public void setInGame(boolean inGame) {
         this.inGame = inGame;
     }
+
 }

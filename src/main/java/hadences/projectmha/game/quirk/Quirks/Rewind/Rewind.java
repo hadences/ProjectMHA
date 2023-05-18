@@ -14,6 +14,10 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.HandlerList;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -108,9 +112,12 @@ public class Rewind extends QuirkCastManager {
         OG_RCABILITY_DAMAGE = RCABILITY_DAMAGE;
     }
 
+    public void initPassive(Player p) {
+
+    }
 
     public boolean CastAbility1(Player p) {
-        ability1.ability(p);
+        ability1.ability(p,ability1);
         return true;
     }
 
@@ -299,23 +306,40 @@ public class Rewind extends QuirkCastManager {
     }
 }
 
-class Ability1{
+class Ability1 implements Listener {
     int CastRange = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Rewind.Abilities.Ability1.CastRange");
 
     private int StaminaLossInterval = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Rewind.Abilities.Ability1.StaminaLossInterval");
     private int StaminaLoss = (int) ProjectMHA.getPlugin(ProjectMHA.class).getConfig().get("Quirks.Rewind.Abilities.Ability1.StaminLossAmount");
 
-
     private boolean toggle = false;
+    private Ability1 ability1;
     Damage damage = new Damage();
-    public void ability(Player p){
+
+    private Player player;
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e){
+        Player p = e.getPlayer();
+        if(p != player) return;
+
+        toggle = false;
+        HandlerList.unregisterAll(ability1);
+
+    }
+
+    public void ability(Player p, Ability1 ability1){
+        this.ability1 = ability1;
+        player = p;
         p.playSound(p.getLocation(),Sound.ITEM_TRIDENT_RETURN,1f,1f);
         if(toggle == false){
             toggle = true;
+            ProjectMHA.getPlugin(ProjectMHA.class).getServer().getPluginManager().registerEvents(this,ProjectMHA.getPlugin(ProjectMHA.class));
             p.sendMessage(Component.text(Chat.format("&eRewind &fAura &e: &e[&aActivated&e]")));
             loop(p);
         }else{
             toggle = false;
+            HandlerList.unregisterAll(ability1);
             p.sendMessage(Component.text(Chat.format("&eRewind &fAura &e: &e[&cDeactivated&e]")));
         }
     }
@@ -336,12 +360,12 @@ class Ability1{
 
                     visuals(p);
                 List<Entity> target = (List<Entity>) p.getLocation().getNearbyEntities(CastRange,CastRange,CastRange);
-                target = damage.getTeamPlayers(p,target);
+                target = damage.cleanTargetList(p,target);
                 for(Entity e: target){
-                    if(e instanceof Player){
-                        ((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,15,50));
-                        ((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,15,50));
-                        ((Player) e).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,15,50));
+                    if(e instanceof LivingEntity){
+                        ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,25,50));
+                        ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,25,50));
+                        ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,25,50));
 
                     }
                 }
@@ -360,6 +384,8 @@ class Ability1{
             location.getWorld().spawnParticle(Particle.REDSTONE, location.clone().add(pos), 5, 0.1, 0.1, 0.1, 0.5, new Particle.DustOptions(Color.fromRGB(254, 254, 45 ), 0.3f));
         }
     }
+
+
 }
 
 class Ability2{

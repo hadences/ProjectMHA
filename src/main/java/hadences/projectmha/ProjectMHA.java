@@ -7,8 +7,10 @@ import hadences.projectmha.chat.Chat;
 import hadences.projectmha.commands.CommandManager;
 import hadences.projectmha.commands.ToggleDev;
 import hadences.projectmha.gui.events.GUIEventManager;
+import hadences.projectmha.nms.animatedtab.TabManager;
 import hadences.projectmha.scoreboard.BoardManager;
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
@@ -21,6 +23,7 @@ import java.util.List;
 
 import static hadences.projectmha.config.ArenaConfig.loadArenas;
 import static hadences.projectmha.config.ArenaConfig.updateArenaConfig;
+import static hadences.projectmha.config.MusicConfig.loadMusic;
 import static hadences.projectmha.config.PlayerConfig.updatePlayerConfig;
 import static hadences.projectmha.config.QuirkConfig.loadQuirks;
 
@@ -30,9 +33,19 @@ public final class ProjectMHA extends JavaPlugin {
 
     public ItemStack MenuItem = new ItemStack(Material.NETHER_STAR);
 
+    public TabManager tab;
 
     @Override
     public void onEnable() {
+        //NMS TabManager
+        this.tab = new TabManager(this);
+        tab.addHeader(Chat.getConsoleName() + "\n&f&l-&c&l-----------------&f&l-");
+        tab.addFooter("&f&l-&c&l-----------------&f&l-\n&eDeveloped by &f: &a&lHadences\n&eOnline Players &f: &a" + Bukkit.getOnlinePlayers().size());
+        tab.showTab();
+
+        //getServer().getPluginManager().registerEvents(new Glow(), this);
+
+
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(new MainEvent(), this);
         getServer().getPluginManager().registerEvents(new GUIEventManager(), this);
@@ -44,6 +57,8 @@ public final class ProjectMHA extends JavaPlugin {
         //initialize ds command
         getCommand("mha").setExecutor(new CommandManager());
         getCommand("dev").setExecutor(new ToggleDev());
+        getCommand("test").setExecutor(new debug());
+
         //create Menu Item
         createMenuItem();
 
@@ -74,6 +89,7 @@ public final class ProjectMHA extends JavaPlugin {
         //Populate the arenalist through config.
         loadArenas();
         loadQuirks();
+        loadMusic();
     }
 
     //Load Menu Item

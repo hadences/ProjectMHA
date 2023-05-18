@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -327,12 +328,9 @@ class Ability1 implements Listener {
     public void HardenerDamage(EntityDamageEvent e){
         if(e.getEntity() instanceof LivingEntity)
         if(e.getEntity() instanceof Player){
-            if(e.getCause() == EntityDamageEvent.DamageCause.CUSTOM && console.getGamemodeManager().getLastDamager().get(e.getEntity().getUniqueId()) == player) return;
             Player p = (Player) e.getEntity();
             if(p != player) return;
-
-            p.damage(e.getDamage() - (e.getDamage() * (Reduction_Percentage/100)),p);
-            e.setCancelled(true);
+            e.setDamage(e.getDamage() - (e.getDamage() * (Reduction_Percentage/100)));
             p.playSound((p).getLocation(), Sound.ITEM_SHIELD_BREAK, 1, 1);
         }
     }
@@ -409,6 +407,7 @@ class Ability2{
 }
 
 class Ultimate implements Listener{
+    private Damage damage = new Damage();
     ItemStack helmet;
     ItemStack chestplate;
     ItemStack leggings;
@@ -446,11 +445,22 @@ class Ultimate implements Listener{
     public void HardenerDamage(EntityDamageEvent e){
         if(e.getEntity() instanceof Player){
             Player p = (Player) e.getEntity();
-            if(p != player) return;
+            //if(p != player) return;
 
-            e.setCancelled(true);
-            p.playSound((p).getLocation(), Sound.ITEM_SHIELD_BREAK, 1, 2);
+            if(p == player){
+                e.setCancelled(true);
+                p.playSound((p).getLocation(), Sound.ITEM_SHIELD_BREAK, 1, 2);
+            }
+            ArrayList<Entity> target = (ArrayList<Entity>) player.getNearbyEntities(2,2,2);
+            target = (ArrayList<Entity>) damage.getTeamPlayers(p,target);
 
+            if(target.contains(e.getEntity())) {
+                if(e.getEntity() != player)
+                p.sendMessage(Chat.format("&ePlayer " + ProjectMHA.getPlugin(ProjectMHA.class).board.getScoreboard().getTeam(playerdata.get(player.getUniqueId()).getTEAM()).getColor() + player.getName() + " &eblocked " + e.getDamage() + "&c!"));
+
+                e.setCancelled(true);
+                p.playSound((p).getLocation(), Sound.ITEM_SHIELD_BREAK, 1, 2);
+            }
         }
     }
 }

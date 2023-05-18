@@ -9,31 +9,35 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&6>> &fPunch &6<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 4.0
+        StaminaCost: 10
+        Cooldown: 4
+        Description: User punches an &cenemy &7in the direction the player is facing.
       Ability2:
         Name: '&6>> &6Stun &fPunch &6<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        StunTimer: 1
+        Damage: 2.0
+        StaminaCost: 30
+        Cooldown: 5
+        Description: User punches an &cenemy &7in the direction the player is facing
+          and &estuns &7the target.
+        StunTimer: 2
       Ultimate:
-        Name: '&6>> &f&lPhantom &6&lDomain &6<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Name: '&6>> &f&lPhantom''s &6&lDomain &6<<'
+        Damage: 4.0
+        StaminaCost: 45
+        Cooldown: 80
+        Description: The user becomes &ainvulnerable &7and gains a &cbuff &7during
+          its &dultimate &7duration &e(&b15 &7seconds&e).
         UltTimer: 15
         UltBuff: 4.0
       RCAbility:
         Name: '&6>> &fPhase &6<<'
         Damage: 0.0
-        StaminaCost: 1
+        StaminaCost: 10
         Cooldown: 1
-        Description: N/A
+        Description: The user &fphases &7through blocks for a short duration. Pressing
+          &ashift&7/&aspace &7will &ccancel &7the &fphasing &7ability. The player
+          will be &cforced &cup &7after the &fphasing &7duration.
   Blackwhip:
     DisplayName: '&8Black&3whip'
     Item: BOOK
@@ -44,35 +48,38 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&3>> &8Whip &3Pull &3<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 4.0
+        StaminaCost: 15
+        Cooldown: 4
+        Description: The user sends out &8black&3whip &7towards the direction the
+          user is facing, dealing &cdamage &7and pulling any target towards them.
         Blackwhip_Length: 12
         Blackwhip_Hitbox: 0.5
       Ability2:
         Name: '&3>> &3Triple &8Shock &3<<'
-        Damage: 8.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 5.0
+        StaminaCost: 30
+        Cooldown: 6
+        Description: User sends out &8black&3whip &7in three different directions,
+          inflicting &cdamage &7to nearby &cenemies.
         Blackwhip_Length: 6
         Blackwhip_Hitbox: 0.5
       Ultimate:
         Name: '&3>> &3&lTendril &8&lTerror &3<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 35
+        Cooldown: 45
+        Description: The user pulls all &cenemies &7in a &b8 &7block radius towards
+          the center and slows them for &b5 &7seconds.
         UltRadius: 8.0
         SlowTimer: 5
         UltSlow: 2
       RCAbility:
         Name: '&3>> &8Black&3whip &3<<'
         Damage: 0.0
-        StaminaCost: 1
+        StaminaCost: 15
         Cooldown: 1
-        Description: N/A
+        Description: The user &8grap&3ples &7toward the &ablock &7the user is facing.
         Blackwhip_Length: 15
         Blackwhip_Hitbox: 0.5
   Erasure:
@@ -84,33 +91,34 @@ Quirks:
     Type: '&eEmitter'
     Abilities:
       Ability1:
-        Name: '&c>> &cErase &c<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-      Ability2:
         Name: '&c>> &fPunch &c<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        EraseTimer: 2
+        Damage: 3.5
+        StaminaCost: 10
+        Cooldown: 3
+        Description: User punches an &cenemy &7in the direction the player is facing.
+      Ability2:
+        Name: '&c>> &cErase &c<<'
+        Damage: 0.0
+        StaminaCost: 10
+        Cooldown: 2
+        Description: The user &cerases &7a &ctarget's &7quirk for &b3 &7seconds.
+        EraseTimer: 3
         Erasure_Hitbox: 0.5
       Ultimate:
         Name: '&f>> &4&lTotal &c&lErasure &f<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        ErasureTimer: 4
+        Damage: 0.0
+        StaminaCost: 55
+        Cooldown: 85
+        Description: The user erases all &cenemies' &7quirk in the user's &avision
+          &7for &b10 &7seconds.
+        ErasureTimer: 10
         Erasure_Hitbox: 50.0
       RCAbility:
         Name: '&c>> &fCloth Grapple &c<<'
         Damage: 0.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        StaminaCost: 15
+        Cooldown: 4
+        Description: The user &fgrapples &7toward the &ablock &7the user is facing.
         Cloth_Length: 8
   Zero-Gravity:
     DisplayName: '&dZero-Gravity'
@@ -122,36 +130,38 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&5>> &dZero-Gravity &fPunch &5<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 1.5
+        StaminaCost: 20
+        Cooldown: 4
+        Description: User punches a target &dlevitating &7them for &b2 &7seconds.
+          If the target is an &aally, the ally gains a &cbuff &7for &b10 &7seconds.
         BuffDuration: 10
         BuffAmplifier: 3
         GravityDuration: 2
         GravityAmplifier: 17
       Ability2:
         Name: '&5>> &fRelease &5<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 5
+        Cooldown: 0
+        Description: All tagged entities by the user lose the &dlevitation &7effect.
       Ultimate:
         Name: '&5>> &d&lFloor &d&lis &c&lLava&d! &5<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 40
+        Cooldown: 60
+        Description: For &b8 &7seconds, the user gains &bspeed &7and during its duration,
+          all &cenemies &7hit by the user are &cdisarmed &7and &dlevitated.
         GravityDuration: 2
         GravityAmplifier: 17
         UltTimer: 8
-        SpeedAmplifier: 4
+        SpeedAmplifier: 6
       RCAbility:
         Name: '&5>> &dSelf Gravitation &5<<'
         Damage: 0.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        StaminaCost: 10
+        Cooldown: 0
+        Description: '&dLevitates &7the user for &b2 &7seconds'
         GravityDuration: 2
         GravityAmplifier: 17
   HalfCold-HalfHot:
@@ -164,34 +174,38 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&b>> &bIce Wall &c<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 35
+        Cooldown: 10
+        Description: User creates an &bice wall &7at the direction the user is facing,
+          &estunning &7all nearby &cenemies &7for &b3 &7seconds.
         FreezeTimer: 3
       Ability2:
         Name: '&b>> &cFlame Barrage &c<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 1.5
+        StaminaCost: 10
+        Cooldown: 8
+        Description: User consecutively shoots &a4 &7fireballs at the user's direction,
+          &6burning &7the target for &b4 &7seconds.
         StunTimer: 1
         BurnTimer: 4
         FlameRange: 10
       Ultimate:
         Name: '&b>> &f&lFlash&b&lFreeze &c&lHeatwave &c<<'
-        Damage: 20.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 12.0
+        StaminaCost: 30
+        Cooldown: 35
+        Description: User creates an explosion of &6flames&7, inflicting &cdamage
+          &7to nearby &cenemies&7. Must be facing &bice &7to use.
         FreezeTimer: 3
       RCAbility:
         Name: '&b>> &bMobi&clity &c<<'
         Damage: 0.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        AbilityTimer: 4
+        StaminaCost: 15
+        Cooldown: 10
+        Description: For&b2 &7seconds, the user &bice &7dashes on ground and &fglides
+          &7on air.
+        AbilityTimer: 2
     Object:
       Ice_0:
         Timer: 1
@@ -209,31 +223,35 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&7>> &6Explosion &7<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 4.0
+        StaminaCost: 25
+        Cooldown: 5
+        Description: User creates an &6explosion &7towards the direction the user
+          is facing.
         Hitbox: 1.2
       Ability2:
         Name: '&7>> &6Stun &7Grenade &7<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 2.0
+        StaminaCost: 35
+        Cooldown: 6
+        Description: User creates an &6explosion &7towards the direction the user
+          is facing, &8blinding &7all nearby &cenemies.
         BlindTimer: 4
       Ultimate:
         Name: '&7>> &6&lEXPLOSION &7<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 10.0
+        StaminaCost: 35
+        Cooldown: 55
+        Description: The user shoots a line of &6explosions &7dealing heavy &cdamage
+          &7to nearby enemies.
         BlastLength: 15
       RCAbility:
         Name: '&7>> &6Explosive &7Speed &7<<'
         Damage: 0.0
-        StaminaCost: 1
+        StaminaCost: 3
         Cooldown: 0
-        Description: N/A
+        Description: The user is repelled by the &6explosion &7created behind the
+          user, allowing &aflight.
   Tape:
     DisplayName: '&fTape'
     Item: BOOK
@@ -245,26 +263,28 @@ Quirks:
       Ability1:
         Name: '&f>> &fTape &f<<'
         Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        TapeTimer: 4
+        StaminaCost: 10
+        Cooldown: 3
+        Description: Shoots a line of cobwebs, slowing all &cenemies &7and &aallies.
+        TapeTimer: 3
       Ability2:
         Name: '&f>> &fTape Trap &f<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 15
+        Cooldown: 6
+        Description: Creates a cage of cobwebs in the direction the user is facing.
+          Must be facing a solid block.
         TapeRange: 15
         TapeTimer: 4
         Tape_Hitbox: 0.5
         Tape_Radius: 2.0
       Ultimate:
-        Name: '&f>> &f&lTape &f&lFrenzy &f<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Name: '&f>> &f&lAdhesive &f&lAssault &f<<'
+        Damage: 0.0
+        StaminaCost: 20
+        Cooldown: 45
+        Description: For &b10 &7seconds, The user gains a &3cooldown reduction &7allowing
+          the user to continuously use other abilities faster.
         UltTimer: 10
         Ability1CD: 1
         Ability2CD: 1
@@ -272,9 +292,9 @@ Quirks:
       RCAbility:
         Name: '&f>> &fTape Grapple &f<<'
         Damage: 0.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        StaminaCost: 10
+        Cooldown: 2
+        Description: The user &fgrapples &7toward the &ablock &7the user is facing.
         Tape_Length: 15
         Tape_Hitbox: 0.5
   Decay:
@@ -287,38 +307,42 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&7>> &8Decay &7<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 2.0
+        StaminaCost: 15
+        Cooldown: 5
+        Description: Close range forward arc from the user that deals damage and applies
+          &8wither &7to enemies in range for &b4 &7seconds.
         DecayTimer: 4
-        DecayAmplifier: 2
+        DecayAmplifier: 6
       Ability2:
         Name: '&7>> &8Desolation &7<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 30
+        Cooldown: 6
+        Description: Converts the floor in the direction the user is facing into &8decay
+          &7blocks. These blocks apply &8wither &7to &cenemies &7standing on them.
         DecayRange: 15
-        DecayBlockTimer: 6
-        DecayTimer: 4
-        DecayAmplifier: 2
+        DecayBlockTimer: 4
+        DecayTimer: 3
+        DecayAmplifier: 4
       Ultimate:
         Name: '&7>> &5&lGod &8&lof &f&lDestruction &7<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        DecayBlockTimer: 15
-        DecayRadius: 40.0
+        Damage: 0.0
+        StaminaCost: 45
+        Cooldown: 65
+        Description: The user turns all blocks in a &b20 &7block radius into &8decay
+          &7blocks. These blocks apply &8wither &7to &cenemies &7standing on them.
+        DecayBlockTimer: 10
+        DecayRadius: 20.0
         DecayTimer: 4
-        DecayAmplifier: 2
+        DecayAmplifier: 6
       RCAbility:
         Name: '&7>> &8Enchanced Mobility &7<<'
         Damage: 0.0
-        StaminaCost: 1
-        Cooldown: 0
-        Description: N/A
+        StaminaCost: 10
+        Cooldown: 8
+        Description: For a short period of time, the user gains a &6boost &7in &bspeed
+          &7and &ajump.
         AbilityTimer: 5
         MobilityAmplifier: 3
   Engine:
@@ -334,29 +358,33 @@ Quirks:
       Ability1:
         Name: '&f>> &bPunch &f<<'
         Damage: 4.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        StaminaCost: 15
+        Cooldown: 3
+        Description: User punches an &cenemy &7in the direction the player is facing.
+          The &cdamage &7increases the faster the user is.
       Ability2:
         Name: '&f>> &bRecipro Burst &f<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 30
+        Cooldown: 12
+        Description: The user gains a &bburst &7of &fspeed &7for &a6 &7seconds. After
+          the duration, the user is &cslowed &7for a short duration.
         AbilityTimer: 6
       Ultimate:
         Name: '&f>> &b&lRecipro &6&lTurbo &f<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 35
+        Cooldown: 60
+        Description: The user gains a &bburst &7of &fspeed &7faster than Recipro Burst
+          for &b10 &7seconds. After the duration, the user is &cslowed &7for a short
+          duration.
         UltTimer: 10
       RCAbility:
         Name: '&f>> &bEngine &f<<'
         Damage: 0.0
         StaminaCost: 1
         Cooldown: 0
-        Description: N/A
+        Description: The user gains &bspeed&7.
         SpeedAmplifier: 4
   FaJin:
     DisplayName: '&bFa&3Jin'
@@ -368,32 +396,35 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&3>> &bSmash &3<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        KineticCharge: 30
+        Damage: 4.0
+        StaminaCost: 20
+        Cooldown: 4
+        Description: User punches an &cenemy &7in the direction the player is facing.
+          Stores &e15 &bKinetic Energy&7.
+        KineticCharge: 15
       Ability2:
         Name: '&3>> &bKinetic &fBoost &3<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        AbilityTimer: 8
+        Damage: 0.0
+        StaminaCost: 20
+        Cooldown: 10
+        Description: User negates all &cfall damage &7and reset &3cooldowns &7for
+          all abilities &e(&cexcluding &dultimate&e)&7.
+        AbilityTimer: 4
       Ultimate:
         Name: '&3>> &b&lKinetic &f&lDischarge &3<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 25
+        Cooldown: 30
+        Description: User releases the &bkinetic energy &astored&7, &cbuffing &7the
+          user's &cdamage &7and &bspeed&7.
         UltTimer: 10
       RCAbility:
         Name: '&3>> &fDash &3<<'
         Damage: 0.0
-        StaminaCost: 1
+        StaminaCost: 10
         Cooldown: 1
-        Description: N/A
-        KineticCharge: 25
+        Description: The user &adashes &7forward. Stores &e10 &bKinetc Energy&7.
+        KineticCharge: 10
   Hardening:
     DisplayName: '&7Harden&8ing'
     Item: BOOK
@@ -404,33 +435,36 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&8>> &7Harden &8<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 15
+        Cooldown: 20
+        Description: For &b10 &7seconds, the user gains a &a60% &cdamage &3reduction
+          &7from all incoming damage &cinflicted&7.
         AbilityTimer: 10
-        Harden_Damage_Reduction_Percentage: 80.0
+        Harden_Damage_Reduction_Percentage: 60.0
       Ability2:
         Name: '&8>> &7Gauntlet Fissure &8<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 3.0
+        StaminaCost: 25
+        Cooldown: 8
+        Description: User slams the ground &aknocking up &7all nearby &cenemies &7in
+          the direction the user is facing.
         BlockRadius: 3
         SlowAmplifier: 4
       Ultimate:
         Name: '&8>> &4&lUNBREAKABLE &8<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 35
+        Cooldown: 60
+        Description: For &b15 &7seconds, the user and all nearby allies &anegate &7all
+          incoming damage.
         UltTimer: 15
       RCAbility:
         Name: '&8>> &fPunch &8<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 3.0
+        StaminaCost: 15
+        Cooldown: 4
+        Description: User punches an &cenemy &7in the direction the player is facing.
   Cremation:
     DisplayName: '&bCre&8mation'
     Item: BOOK
@@ -441,31 +475,35 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&8>> &bFlame Burst &8<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 3.0
+        StaminaCost: 20
+        Cooldown: 6
+        Description: The user shoots a line of &bflames &7inflicting &cdamage &7to
+          all nearby enemies.
       Ability2:
         Name: '&8>> &bIgnition &8<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 25
+        Cooldown: 8
+        Description: The user creates an arc of &6flames &bigniting &7all &cenemies
+          &7for &b5 &7seconds
         BurnTimer: 5
       Ultimate:
         Name: '&8>> &b&lDevil''s &8&lDance &8<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 40
+        Cooldown: 65
+        Description: The user is &eempowered&7, granting &cbuffs &7to all abilities
+          for &b15 &7seconds.
         UltTimer: 15
         BuffDamage: 2.0
       RCAbility:
         Name: '&8>> &bFlamethrower &8<<'
-        Damage: 1.0
-        StaminaCost: 1
+        Damage: 0.2
+        StaminaCost: 5
         Cooldown: 0
-        Description: N/A
+        Description: The user shoot &bflames &7in the direction the player is facing
+          inflicting &cdamage&7.
   Rewind:
     DisplayName: '&eRewind'
     Item: BOOK
@@ -476,26 +514,29 @@ Quirks:
     Abilities:
       Ability1:
         Name: '&f>> &eRewind &fAura &f<<'
-        Damage: 1.0
-        StaminaCost: 1
+        Damage: 0.0
+        StaminaCost: 5
         Cooldown: 1
-        Description: N/A
+        Description: '&e[&aToggle &askill&e] &7The user &3slows&7, &8blinds&7, and
+          &econfuses &7all nearby enemies.'
         StaminaLossInterval: 10
-        StaminLossAmount: 2
+        StaminLossAmount: 10
         CastRange: 2
       Ability2:
         Name: '&f>> &eTension &7Blow &f<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
-        AbilityRadius: 5
+        Damage: 0.0
+        StaminaCost: 10
+        Cooldown: 6
+        Description: The user creates a &eflash explosion &fairborning &7all &cenemies
+          &7away
+        AbilityRadius: 6
       Ultimate:
         Name: '&f>> &e&lTransendence &f<<'
-        Damage: 1.0
-        StaminaCost: 1
-        Cooldown: 1
-        Description: N/A
+        Damage: 0.0
+        StaminaCost: 60
+        Cooldown: 70
+        Description: The user creates a &afield &erewinding &7all &aally &3cooldowns
+          &7when inside.
         UltTimer: 8
         UltRadius: 5.0
       RCAbility:
@@ -503,8 +544,171 @@ Quirks:
         Damage: 0.0
         StaminaCost: 1
         Cooldown: 0
-        Description: N/A
+        Description: The user reduces &3cooldown &7to all nearby allies. &e(&a1 &7second&e)
         CastRange: 4
+  Bloodcurdle:
+    DisplayName: '&4Bloodcurdle'
+    Item: BOOK
+    Classification: '&5Villain'
+    CustomModelData: 2
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&4>> &7Slash &4<<'
+        Damage: 3.0
+        StaminaCost: 20
+        Cooldown: 4
+        Description: 'The user slashes a target inflicting damage. &cMark Chance &f:
+          &c66%'
+        Mark_Chance_Percentage: 66
+      Ability2:
+        Name: '&c>> &4Bloodcurdle &c<<'
+        Damage: 0.0
+        StaminaCost: 30
+        Cooldown: 15
+        Description: All marked players are &eimmobilized &7for a certain amount of
+          seconds (&4random&7).
+      Ultimate:
+        Name: '&4>> &4&lBlood&c&lthirst &4<<'
+        Damage: 0.0
+        StaminaCost: 35
+        Cooldown: 35
+        Description: The user gains &bspeed&7, &ajump&7, and &cregeneration &7and
+          continues to gain this status effect for each &ckill &7gained during its
+          duration.
+        UltTimer: 15
+        SpeedAmplifier: 5
+        RegenerationAmplifier: 3
+        JumpAmplifier: 4
+        BuffDamage: 3.0
+      RCAbility:
+        Name: '&4>> &fSweeping Slice &4<<'
+        Damage: 2.0
+        StaminaCost: 15
+        Cooldown: 4
+        Description: 'User dashes forward, &cinflicting damage &7in the user''s direction.
+          &cMark Chance &f: &c50%'
+        Mark_Chance_Percentage: 50
+        BlockRange: 8
+      Bloodcurdle:
+        StunTimerPossibility: 6
+  Rifle:
+    DisplayName: '&dRifle'
+    Item: BOOK
+    Classification: '&5Villain&f/&aHero'
+    CustomModelData: 3
+    Role: '&cAttacker'
+    Type: '&dTransformation'
+    Abilities:
+      Ability1:
+        Name: '&d>> &fEscape &d<<'
+        Damage: 0.0
+        StaminaCost: 15
+        Cooldown: 6
+        Description: The user leaps backwards.
+        VelocityMultiplier: 1.5
+      Ability2:
+        Name: '&d>> &fQuick &6Draw &d<<'
+        Damage: 0.0
+        StaminaCost: 30
+        Cooldown: 20
+        Description: Resets &dAbility 1 &7and &dRCAbility &7cooldowns.
+      Ultimate:
+        Name: '&d>> &d&lDead&5&lShot &d<<'
+        Damage: 0.0
+        StaminaCost: 40
+        Cooldown: 55
+        Description: For &b15 &7seconds, the user will shoot a &asecond shot &7after
+          the first shot.
+        UltTimer: 15
+      RCAbility:
+        Name: '&d>> &dRifle &d<<'
+        Damage: 4.0
+        StaminaCost: 10
+        Cooldown: 2
+        Description: The user shoots a bullet &cinflicting damage&7.
+        Range: 50
+  Hellflame:
+    DisplayName: '&6Hell&cflame'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&cAttacker'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&6>> &cFlash&6fire &fFist &6<<'
+        Damage: 3.0
+        StaminaCost: 25
+        Cooldown: 6
+        Description: User dashes forward and punches its target &7igniting &7them
+          for &b4 &7seconds.
+        BurnTimer: 4
+      Ability2:
+        Name: '&6>> &4Raging Assault &f- &6Hell &cMinefield &6<<'
+        Damage: 1.0
+        StaminaCost: 40
+        Cooldown: 8
+        Description: User &6erupts &7a wave of flames across the ground &eairborning
+          &7and &cigniting &7nearby enemies.
+        BurnTimer: 3
+      Ultimate:
+        Name: '&c>> &6&lProminence &6&lBurn &c<<'
+        Damage: 1.0
+        StaminaCost: 75
+        Cooldown: 70
+        Description: User floats in the air, shooting a beam of &6flames &7inflicting
+          &cdamage &cper &ctick &7and burning nearby enemies for &b8 &7seconds.
+        BurnTimer: 8
+        BeamLength: 15
+        UltTimer: 5
+      RCAbility:
+        Name: '&6>> &cFlame&6burst &fRush &6<<'
+        Damage: 1.0
+        StaminaCost: 1
+        Cooldown: 0
+        Description: User releases a burst of &6flames &7allowing &aflight&7.
+        AbilityTimer: 5
+  Heal:
+    DisplayName: '&aHeal'
+    Item: BOOK
+    Classification: '&aHero'
+    CustomModelData: 1
+    Role: '&eSupport'
+    Type: '&eEmitter'
+    Abilities:
+      Ability1:
+        Name: '&2>> &aHealing &fTouch &2<<'
+        Damage: 3.0
+        StaminaCost: 25
+        Cooldown: 6
+        Description: 'User gives an ally &aregeneration for &b5 &7seconds.'
+        RegenerationTimer: 5
+        RegenerationAmplifier: 2
+      Ability2:
+        Name: '&2>> &aLife &cAbsorber &2<<'
+        Damage: 1.0
+        StaminaCost: 40
+        Cooldown: 8
+        Description: 'User creates a pool &aabsorbing &7nearby enemies'' Health.'
+        HealRange: 8
+        Heal_Radius: 5.0
+      Ultimate:
+        Name: '&2>> &a&lRegrowth &2<<'
+        Damage: 0.0
+        StaminaCost: 75
+        Cooldown: 80
+        Description: 'User grants all nearby &aallies &eabsorption &7for &b20 &7seconds.'
+        UltTimer: 20
+        UltRadius: 5.0
+      RCAbility:
+        Name: '&2>> &bRun &2<<'
+        Damage: 0.0
+        StaminaCost: 4
+        Cooldown: 0
+        Description: 'User gains &bSpeed.'
+        SpeedAmplifier: 2
 Console:
   ChatName: '&0&l[&e&lPROJECT MHA&0&l]'
 Game:
@@ -524,42 +728,79 @@ Game:
       DisplayName: '&cFree-For-All'
       Item: RED_BANNER
       Settings:
-        StartingHealth: 30.0
+        StartingHealth: 40.0
         StartingStamina: 800
-        Minutes: 2
+        Minutes: 8
         Seconds: 0
-        KillCount: 1
+        KillCount: 15
     Team-Deathmatch:
       DisplayName: '&9Team-Deathmatch'
       Item: BLUE_BANNER
       Settings:
-        StartingHealth: 30.0
+        StartingHealth: 40.0
         StartingStamina: 800
-        Minutes: 2
+        Minutes: 10
         Seconds: 0
-        MaxScore: 4
+        MaxScore: 100
     Hero-vs-Villain:
       DisplayName: '&aHero &6vs &5Villain'
       Item: PURPLE_BANNER
       Settings:
-        StartingHealth: 30.0
+        StartingHealth: 40.0
         StartingStamina: 800
-        Minutes: 2
+        Minutes: 6
         Seconds: 0
+        ReviveTimer: 4
     Tournament-Bracket:
       DisplayName: '&6Tournament &fBracket'
       Item: WHITE_BANNER
       Settings:
         StartingHealth: 30.0
         StartingStamina: 800
-        Minutes: 2
+        Minutes: 6
         Seconds: 0
+Music:
+  '1': custom.allmightwua
+  '2': custom.calvarybattle
+  '3': custom.goplusultra
+  '4': custom.illbeyourhero
+  '5': custom.successor
+  '6': custom.yousayrunjetsayrun
+  '7': custom.todorokicounterattack
+  '8': custom.spirittosucceed
 Users:
   9d3acbea-416c-4d5b-8288-75f167e256fb:
     NAME: Hadences
     WINS: '0'
   2b5a6122-7220-48f2-ab8e-52787e7c1f19:
     NAME: Catslats1
+    WINS: '0'
+  37c2810c-13ba-4015-9727-31c39ec4f9eb:
+    NAME: ggracc_
+    WINS: '0'
+  c280ba06-f2fb-4357-92cd-32ba3b76c5f0:
+    NAME: asnazzyenderman
+    WINS: '0'
+  4cbc7c8e-26e3-4c47-aeec-66105dd0bc3a:
+    NAME: SargePancakes
+    WINS: '0'
+  94616d7b-3c2c-4b56-9758-2c3240993029:
+    NAME: talknrock
+    WINS: '0'
+  2d2b6fb7-6c11-47e9-a97e-1f55b12a387a:
+    NAME: Epic_twin_power
+    WINS: '0'
+  ca397b3c-a4f3-483d-8832-589d18422c6b:
+    NAME: SoundwaveOfBC
+    WINS: '0'
+  689e0edb-514d-4660-a104-558337d38eae:
+    NAME: lilmadiii
+    WINS: '0'
+  f5045a41-6899-4b07-b494-cdd0035aecb1:
+    NAME: ryanhpark
+    WINS: '0'
+  7a7d2d59-3a65-4d37-a2b7-40ea513855ee:
+    NAME: Eggos21
     WINS: '0'
 Arenas:
   Test:
@@ -613,4 +854,412 @@ Arenas:
         X: -191.65268907483045
         Y: 6.0
         Z: -87.0443300504967
+    COMPLETE: true
+  Mall:
+    NAME: Mall
+    LOBBYSPAWN:
+      X: 92.59662981170575
+      Y: 48.0
+      Z: 114.58104309695577
+    TEAM1SPAWN:
+      X: 120.49344194569159
+      Y: 22.0
+      Z: 86.4486030005752
+    TEAM2SPAWN:
+      X: 67.37499406518047
+      Y: 22.0
+      Z: 169.48024668224159
+    SPAWNPOINTS:
+      sp0:
+        X: 70.30000001192093
+        Y: 50.5
+        Z: 120.39826354506124
+      sp1:
+        X: 99.12945766179764
+        Y: 47.0
+        Z: 125.01197617424216
+      sp2:
+        X: 64.30041737819845
+        Y: 47.0
+        Z: 156.5277668119283
+      sp3:
+        X: 109.39905978774128
+        Y: 23.0
+        Z: 161.9052114932094
+      sp4:
+        X: 76.0077110671808
+        Y: 32.0
+        Z: 85.39122402739795
+      sp5:
+        X: 66.76151348339933
+        Y: 31.0
+        Z: 134.74861162473368
+      sp6:
+        X: 99.0165097633186
+        Y: 31.0
+        Z: 144.35648571165044
+      sp7:
+        X: 97.59347091801618
+        Y: 32.0
+        Z: 106.72661479513974
+      sp8:
+        X: 77.78293721216082
+        Y: 23.0
+        Z: 106.33295385697342
+      sp9:
+        X: 99.85342858327779
+        Y: 23.0
+        Z: 123.88438109863631
+      sp10:
+        X: 74.66228739929922
+        Y: 23.0
+        Z: 135.10347907451504
+    COMPLETE: true
+  Station:
+    NAME: Station
+    LOBBYSPAWN:
+      X: 274.5980834851289
+      Y: 81.0
+      Z: 143.0815473957235
+    TEAM1SPAWN:
+      X: 223.67526591355215
+      Y: 81.0
+      Z: 148.569468808779
+    TEAM2SPAWN:
+      X: 332.1653631137037
+      Y: 81.0
+      Z: 148.50109736332467
+    SPAWNPOINTS:
+      sp0:
+        X: 269.82902535852014
+        Y: 91.0
+        Z: 159.2061510404665
+      sp1:
+        X: 273.42459231005563
+        Y: 81.0
+        Z: 134.15057636287943
+      sp2:
+        X: 275.01071832587587
+        Y: 81.0
+        Z: 162.5769995312776
+      sp3:
+        X: 301.3307864802797
+        Y: 81.0
+        Z: 165.97053323048686
+      sp4:
+        X: 240.96179571446035
+        Y: 81.0
+        Z: 137.48626118282277
+      sp5:
+        X: 226.80291803892626
+        Y: 71.0
+        Z: 141.29708199541318
+      sp6:
+        X: 324.236233731631
+        Y: 71.0
+        Z: 155.7960132650666
+      sp7:
+        X: 271.92070075728424
+        Y: 71.0
+        Z: 171.4707665570825
+    COMPLETE: true
+  BusanSanctuary:
+    NAME: BusanSanctuary
+    LOBBYSPAWN:
+      X: -346.3028413471026
+      Y: 19.5
+      Z: -236.9207173949135
+    TEAM1SPAWN:
+      X: -442.4031219177695
+      Y: 16.0625
+      Z: -217.64676142026968
+    TEAM2SPAWN:
+      X: -249.39062974357432
+      Y: 16.0
+      Z: -217.50106803016317
+    SPAWNPOINTS:
+      sp0:
+        X: -346.4447138888505
+        Y: 18.0
+        Z: -198.15699417771484
+      sp1:
+        X: -346.145030808788
+        Y: 15.0
+        Z: -257.6245034325363
+      sp2:
+        X: -406.3713282657743
+        Y: 14.0
+        Z: -238.46231453550655
+      sp3:
+        X: -357.239532548156
+        Y: 13.0
+        Z: -261.5653029249734
+      sp4:
+        X: -297.47813052508116
+        Y: 14.0
+        Z: -243.21666461132986
+      sp5:
+        X: -298.4920262496168
+        Y: 16.0
+        Z: -207.76972069262214
+      sp6:
+        X: -346.85296118777705
+        Y: 12.0
+        Z: -199.49958693012334
+      sp7:
+        X: -385.88269948224854
+        Y: 16.0
+        Z: -206.43772210558419
+      sp8:
+        X: -392.69999998807907
+        Y: 16.0
+        Z: -239.77856860372668
+      sp9:
+        X: -311.60629302927737
+        Y: 16.0
+        Z: -246.37383951133984
+    COMPLETE: true
+  TrainingGrounds:
+    NAME: TrainingGrounds
+    LOBBYSPAWN:
+      X: 217.45639780081638
+      Y: 38.0
+      Z: -145.7138507177757
+    TEAM1SPAWN:
+      X: 170.37454825613656
+      Y: 34.0
+      Z: -85.37849964801653
+    TEAM2SPAWN:
+      X: 254.69999998807907
+      Y: 34.0
+      Z: -194.54586536139834
+    SPAWNPOINTS:
+      sp0:
+        X: 219.8450118528499
+        Y: 40.0
+        Z: -110.10385792612024
+      sp1:
+        X: 254.02907663548405
+        Y: 41.0
+        Z: -127.64622846105033
+      sp2:
+        X: 225.70966025809872
+        Y: 33.0
+        Z: -179.26731391159942
+      sp3:
+        X: 218.61063805927628
+        Y: 38.0
+        Z: -146.18089587743933
+      sp4:
+        X: 181.89655644893617
+        Y: 33.0
+        Z: -143.34859740104807
+      sp5:
+        X: 168.55021948822105
+        Y: 33.0
+        Z: -113.58162583635695
+      sp6:
+        X: 197.9185225814332
+        Y: 40.0
+        Z: -103.18780991525578
+      sp7:
+        X: 196.3358868101723
+        Y: 40.0
+        Z: -123.80206465558155
+      sp8:
+        X: 232.8170818740839
+        Y: 46.0
+        Z: -121.48645720145535
+    COMPLETE: true
+  Construction:
+    NAME: Construction
+    LOBBYSPAWN:
+      X: -269.6902292200676
+      Y: 53.0
+      Z: 158.30000001192093
+    TEAM1SPAWN:
+      X: -265.18890187377764
+      Y: 38.0
+      Z: 201.57631098078787
+    TEAM2SPAWN:
+      X: -241.19137553507332
+      Y: 38.0
+      Z: 122.31962388962818
+    SPAWNPOINTS:
+      sp0:
+        X: -302.34874313214004
+        Y: 38.0
+        Z: 127.49356623960132
+      sp1:
+        X: -308.6087364279678
+        Y: 38.0
+        Z: 141.46199789565753
+      sp2:
+        X: -310.05807023333716
+        Y: 38.0
+        Z: 189.22411023753108
+      sp3:
+        X: -277.9355186703193
+        Y: 38.0
+        Z: 193.3818647467451
+      sp4:
+        X: -234.39852361579176
+        Y: 38.0
+        Z: 173.4150673187659
+      sp5:
+        X: -232.67021680139794
+        Y: 38.0
+        Z: 145.8791146128647
+      sp6:
+        X: -278.35500500110874
+        Y: 38.0
+        Z: 123.0249239653034
+      sp7:
+        X: -269.7583403515206
+        Y: 43.0
+        Z: 147.06765686845742
+      sp8:
+        X: -270.37653388585505
+        Y: 48.0
+        Z: 170.55227786562008
+      sp9:
+        X: -254.32784748743418
+        Y: 53.0
+        Z: 156.66437443403834
+      sp10:
+        X: -281.5378214404057
+        Y: 65.0
+        Z: 166.42307688647466
+      sp11:
+        X: -238.5642978363166
+        Y: 39.5
+        Z: 137.6121437569743
+    COMPLETE: true
+  JungleFortress:
+    NAME: JungleFortress
+    LOBBYSPAWN:
+      X: -99.96105399313437
+      Y: 56.0
+      Z: 427.5837171772364
+    TEAM1SPAWN:
+      X: -129.1257926921497
+      Y: 43.0
+      Z: 429.98917568556465
+    TEAM2SPAWN:
+      X: -77.99841280269179
+      Y: 45.0
+      Z: 425.99533325456605
+    SPAWNPOINTS:
+      sp0:
+        X: -116.89589561201167
+        Y: 48.0
+        Z: 410.58596954492816
+      sp1:
+        X: -116.61101808707562
+        Y: 43.0
+        Z: 412.30000001192093
+      sp2:
+        X: -99.20980994715778
+        Y: 48.0
+        Z: 411.35105220515436
+      sp3:
+        X: -89.26604711242193
+        Y: 49.0
+        Z: 411.35784377164634
+      sp4:
+        X: -86.52713343319775
+        Y: 45.0
+        Z: 421.5819248747968
+      sp5:
+        X: -90.56290065292725
+        Y: 50.0
+        Z: 434.8671686121755
+      sp6:
+        X: -98.6668527921102
+        Y: 43.0
+        Z: 443.2847858157924
+      sp7:
+        X: -76.52763867117702
+        Y: 45.0
+        Z: 442.8939313775697
+      sp8:
+        X: -113.6710661641185
+        Y: 60.0
+        Z: 421.45938856243157
+      sp9:
+        X: -116.73743490199921
+        Y: 57.0
+        Z: 437.5909473659187
+      sp10:
+        X: -97.58687424462889
+        Y: 67.0
+        Z: 424.2990055907664
+      sp11:
+        X: -84.94423045606572
+        Y: 53.5
+        Z: 415.2686373726318
+      sp12:
+        X: -115.16601953359087
+        Y: 43.0
+        Z: 428.48501608603806
+      sp13:
+        X: -116.03880753815835
+        Y: 57.0
+        Z: 437.82013165552655
+    COMPLETE: true
+  Cavern:
+    NAME: Cavern
+    LOBBYSPAWN:
+      X: -109.18284341790365
+      Y: 48.5
+      Z: 607.36388694292
+    TEAM1SPAWN:
+      X: -109.50453765155474
+      Y: 43.0
+      Z: 624.3490975331927
+    TEAM2SPAWN:
+      X: -109.54345857050279
+      Y: 43.0
+      Z: 592.1656327052144
+    SPAWNPOINTS:
+      sp0:
+        X: -95.12330519586584
+        Y: 46.5
+        Z: 596.3802434397618
+      sp1:
+        X: -93.87310188340811
+        Y: 49.5
+        Z: 608.5178128722762
+      sp2:
+        X: -93.59623763043716
+        Y: 51.0
+        Z: 628.2858718391453
+      sp3:
+        X: -95.7097311305632
+        Y: 34.5
+        Z: 621.2437329290415
+      sp4:
+        X: -122.85429165852935
+        Y: 35.0
+        Z: 627.0243946065629
+      sp5:
+        X: -124.9893860618531
+        Y: 37.0
+        Z: 614.571989974031
+      sp6:
+        X: -107.42685522715493
+        Y: 41.5
+        Z: 602.3000000119209
+      sp7:
+        X: -107.22525622081228
+        Y: 35.5
+        Z: 590.4885062035896
+      sp8:
+        X: -115.46566374622324
+        Y: 42.0
+        Z: 590.7246358863495
+      sp9:
+        X: -111.21371850539688
+        Y: 50.0
+        Z: 588.7837354331688
     COMPLETE: true
