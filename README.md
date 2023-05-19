@@ -1,7 +1,8 @@
 
 <h1 align="center">🎮 ProjectMHA 🎮</h1>
 <p align="center">
-<img src="https://img.shields.io/github/downloads/Hadences/ProjectMHA/total?label=Downloads&style=plastic">
+<img src="https://img.shields.io/github/license/Hadences/ProjectMHA">
+<img src="https://img.shields.io/github/watchers/Hadences/ProjectMHA?style=social">
 </p>
 
 ---
