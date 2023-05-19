@@ -12,6 +12,8 @@ Project MHA is my first completed Java project, a Minecraft server mini game plu
 I have decided to make this public so that future developers can understand and get a better understanding of how most systems were created in vanilla Minecraft.
   - The code isn't necessarily the best nor is it efficient :P
 
+Gameplay of this plugin can be seen [here](https://www.youtube.com/watch?v=omcMQhTf1b0&t=97s)
+
 This is the entire project file - You must compile and build the project if you would like to use it for server production.
 
 ## Warning
